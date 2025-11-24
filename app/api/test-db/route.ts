@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import mongoose from 'mongoose';
 
-// Import models to register them (required for mongoose.models)
 import '@/models/User';
 import '@/models/Kamar';
 import '@/models/PenyewaDetails';
