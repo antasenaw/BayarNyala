@@ -24,6 +24,7 @@ export async function GET() {
   }
 }
 
+
 // POST - Create new user
 export async function POST(request: Request) {
   try {
