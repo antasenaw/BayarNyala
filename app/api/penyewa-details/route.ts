@@ -1,30 +1,30 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
-import User from '@/models/User';
-import bcrypt from 'bcryptjs';
+import PenyewaDetails from '@/models/PenyewaDetails';
+import '@/models/User';
 
-// GET - Get all users
+// GET - Get all penyewa details
 export async function GET(request: Request) {
   try {
     await connectDB();
 
     const { searchParams } = new URL(request.url);
-    const role = searchParams.get('role');
+    const user_id = searchParams.get('user_id');
 
     // Build query filter
     const filter: Record<string, unknown> = {};
-    if (role) {
-      filter.role = role;
+    if (user_id) {
+      filter.user_id = user_id;
     }
 
-    const users = await User.find(filter)
-      .select('-password_hash')
-      .sort({ created_at: -1 });
+    const penyewaDetails = await PenyewaDetails.find(filter)
+      .populate('user_id', 'nama email role')
+      .sort({ createdAt: -1 });
 
     return NextResponse.json({
       success: true,
-      count: users.length,
-      data: users,
+      count: penyewaDetails.length,
+      data: penyewaDetails,
     });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -35,48 +35,41 @@ export async function GET(request: Request) {
   }
 }
 
-
-// POST - Create new user
+// POST - Create penyewa details
 export async function POST(request: Request) {
   try {
     await connectDB();
 
     const body = await request.json();
-    const { nama, email, password, role } = body;
+    const { user_id, nomor_hp, alamat } = body;
 
     // Validasi input
-    if (!nama || !email || !password || !role) {
+    if (!user_id || !nomor_hp || !alamat) {
       return NextResponse.json(
-        { success: false, error: 'Semua field wajib diisi' },
+        { success: false, error: 'User ID, nomor HP, dan alamat wajib diisi' },
         { status: 400 }
       );
     }
 
-    // Hash password
-    const password_hash = await bcrypt.hash(password, 10);
-
-    // Create user
-    const user = await User.create({
-      nama,
-      email,
-      password_hash,
-      role,
+    // Create penyewa details
+    const penyewaDetails = await PenyewaDetails.create({
+      user_id,
+      nomor_hp,
+      alamat,
     });
 
-    // Remove password from response
-    const userResponse = user.toObject();
-    delete userResponse.password_hash;
+    await penyewaDetails.populate('user_id', 'nama email role');
 
     return NextResponse.json({
       success: true,
-      message: 'User created successfully',
-      data: userResponse,
+      message: 'Penyewa details created successfully',
+      data: penyewaDetails,
     }, { status: 201 });
   } catch (error) {
-    // Handle duplicate email error
+    // Handle duplicate user_id error
     if (error && typeof error === 'object' && 'code' in error && error.code === 11000) {
       return NextResponse.json(
-        { success: false, error: 'Email sudah terdaftar' },
+        { success: false, error: 'User sudah memiliki detail penyewa' },
         { status: 400 }
       );
     }

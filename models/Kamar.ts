@@ -5,6 +5,15 @@ export interface IKamar extends Document {
   harga_sewa: number;
   status_ketersediaan: boolean;
   managed_by: mongoose.Types.ObjectId;
+  detail_kamar?: {
+    luas?: number;
+    fasilitas?: string[];
+    lantai?: number;
+    tipe?: 'Standard' | 'Deluxe' | 'Premium';
+    kapasitas?: number;
+    foto?: string[];
+    deskripsi?: string;
+  };
   created_at: Date;
   updated_at: Date;
 }
@@ -32,6 +41,41 @@ const KamarSchema = new Schema<IKamar>(
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: [true, 'Admin pengelola wajib diisi'],
+    },
+    detail_kamar: {
+      luas: {
+        type: Number,
+        min: [0, 'Luas tidak boleh negatif'],
+      },
+      fasilitas: {
+        type: [String],
+        default: [],
+      },
+      lantai: {
+        type: Number,
+        min: [0, 'Lantai tidak boleh negatif'],
+      },
+      tipe: {
+        type: String,
+        enum: {
+          values: ['Standard', 'Deluxe', 'Premium'],
+          message: 'Tipe harus Standard, Deluxe, atau Premium',
+        },
+      },
+      kapasitas: {
+        type: Number,
+        min: [1, 'Kapasitas minimal 1 orang'],
+        max: [10, 'Kapasitas maksimal 10 orang'],
+      },
+      foto: {
+        type: [String],
+        default: [],
+      },
+      deskripsi: {
+        type: String,
+        trim: true,
+        maxlength: [500, 'Deskripsi maksimal 500 karakter'],
+      },
     },
   },
   {
