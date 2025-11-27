@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Kamar from "@/models/Kamar";
+import "@/models/User";  // ← TAMBAHKAN INI untuk register model User
 
 export async function GET(){
     try {
         await connectDB();
 
         const kamarList = await Kamar.find()
-        .populate("Manage By", "nama email")
+        .populate("managed_by", "nama email role")  // ← PERBAIKI: "managed_by" bukan "Manage By"
         .sort({ nomor_unit: 1 });
 
         return NextResponse.json({
