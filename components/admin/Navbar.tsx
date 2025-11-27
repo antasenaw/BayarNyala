@@ -4,7 +4,6 @@ import { usePathname } from "next/navigation"
 
 const Navbar = ({admin}:{admin?:boolean}) => {
   const pathname = usePathname();
-  console.log(pathname)
 
   return (
     <header className="flex flex-col border border-gray-300 shadow-2xl">

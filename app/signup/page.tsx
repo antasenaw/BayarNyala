@@ -15,7 +15,7 @@ const page = () => {
               type="text"
               id="nama"
               name="nama"
-              className="border border-gray-400 p-3 rounded-2xl"
+              className="border border-gray-400 p-3 shadow-xl rounded-2xl"
               placeholder="Masukkan nama lengkap"
             />
           </div>
@@ -25,7 +25,7 @@ const page = () => {
               type="text"
               id="email"
               name="email"
-              className="border border-gray-400 p-3 rounded-2xl"
+              className="border border-gray-400 p-3 shadow-xl rounded-2xl"
               placeholder="Masukkan email"
             />
           </div>
@@ -35,11 +35,11 @@ const page = () => {
               type="text"
               id="password"
               name="password"
-              className="border border-gray-400 p-3 rounded-2xl"
+              className="border border-gray-400 p-3 shadow-xl rounded-2xl"
               placeholder="Masukkan password"
             />
           </div>
-          <button type="submit" id="submit" name="submit" className="bg-blue-800 text-white font-semibold p-3 mt-4 rounded-2xl">Daftar</button>
+          <button type="submit" id="submit" name="submit" className="bg-blue-800 text-white font-semibold p-3 mt-4 shadow-xl cursor-pointer rounded-2xl">Daftar</button>
         </form>
       </section>
     </main>
