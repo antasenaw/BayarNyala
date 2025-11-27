@@ -2,13 +2,13 @@ import AddKamarButton from "@/components/admin/kamar/buttons/AddKamarButton";
 import KamarList from "@/components/admin/kamar/KamarList";
 import Navbar from "@/components/admin/Navbar"
 import { getKamar, postKamar, deleteKamar, getKamarById, editKamar } from "@/lib/fetchKamar"
-import { IKamar } from "@/models/Kamar";
+import { IKamarInput } from "@/models/Kamar";
 import { revalidatePath } from "next/cache";
 
 const Page = async () => {
   const kamarList = await getKamar();
 
-  const postKamarHandler = async (newKamarData: IKamar) => {
+  const postKamarHandler = async (newKamarData: IKamarInput) => {
     "use server"
     const response = await postKamar(newKamarData);
     if (response) revalidatePath('/admin/kamar', 'page');
@@ -29,7 +29,7 @@ const Page = async () => {
     return response;
   }
 
-  const editKamarHandler = async ({ kamarId, updateData }: { kamarId: string, updateData: IKamar }) => {
+  const editKamarHandler = async ({ kamarId, updateData }: { kamarId: string, updateData: IKamarInput }) => {
     "use server"
     const res = await editKamar(kamarId, updateData);
     if (res) revalidatePath('/admin/kamar', 'page');

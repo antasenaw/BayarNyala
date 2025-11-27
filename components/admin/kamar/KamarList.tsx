@@ -1,4 +1,4 @@
-import { IKamar } from "@/models/Kamar";
+import { IKamar, IKamarInput } from "@/models/Kamar";
 import { APIResponse } from "@/lib/fetchKamar";
 import DeleteKamarButton from "./buttons/DeleteKamarButton";
 import EditKamarButton from "./buttons/EditKamarButton";
@@ -12,7 +12,7 @@ const KamarList = ({
   kamarList: IKamar[],
   deleteKamarHandler: (kamarId: string) => Promise<APIResponse>,
   getKamarByIdHandler: (kamarId: string) => Promise<APIResponse>,
-  editKamarHandler: ({ kamarId, updateData }: { kamarId: string, updateData: IKamar }) => Promise<APIResponse>
+  editKamarHandler: ({ kamarId, updateData }: { kamarId: string, updateData: IKamarInput }) => Promise<APIResponse>
 }) => {
   return (
     <div className="rounded-2xl border border-gray-400 text-gray-600 shadow-xl">

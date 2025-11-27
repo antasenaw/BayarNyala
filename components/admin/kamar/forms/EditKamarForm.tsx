@@ -1,6 +1,6 @@
 "use client"
 import { APIResponse } from "@/lib/fetchKamar";
-import { IKamar } from "@/models/Kamar";
+import { IKamar, IKamarInput } from "@/models/Kamar";
 import { useRouter } from "next/navigation";
 import { useRef, FormEvent } from "react";
 
@@ -17,7 +17,7 @@ const EditKamarForm = ({
     updateData
   } : {
     kamarId: string,
-    updateData: IKamar
+    updateData: IKamarInput
   }) => Promise<APIResponse>
   data?: IKamar
   displayEditForm: boolean,
@@ -35,7 +35,7 @@ const EditKamarForm = ({
     try {
       const rawData = Object.fromEntries(new FormData(formRef.current).entries());
 
-      const updateData: IKamar = {
+      const updateData: IKamarInput = {
           nomor_unit: String(rawData.nomor_unit),
           harga_sewa: parseInt(String(rawData.harga_sewa), 10),
           status_ketersediaan: (rawData.status_ketersediaan) === 'true',

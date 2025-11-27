@@ -1,13 +1,13 @@
 "use client"
 import { useState } from "react"
 import InputKamarForm from "../forms/AddKamarForm";
-import { IKamar } from "@/models/Kamar";
+import { IKamarInput } from "@/models/Kamar";
 import { APIResponse } from "@/lib/fetchKamar";
 
 const AddKamarButton = ({
   postKamarHandler,
 } : {
-  postKamarHandler: (newKamarData: IKamar) => Promise<APIResponse>,
+  postKamarHandler: (newKamarData: IKamarInput) => Promise<APIResponse>,
 }) => {
   const [displayInputKamarForm, setDisplayInputKamarForm] = useState(false);
 

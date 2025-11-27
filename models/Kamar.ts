@@ -18,6 +18,13 @@ export interface IKamar extends Document {
   updated_at: Date;
 }
 
+export interface IKamarInput {
+  nomor_unit: string;
+  harga_sewa: number;
+  status_ketersediaan: boolean;
+  managed_by: string;
+}
+
 const KamarSchema = new Schema<IKamar>(
   {
     nomor_unit: {

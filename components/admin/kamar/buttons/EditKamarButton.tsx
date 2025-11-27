@@ -1,7 +1,7 @@
 "use client"
 import { APIResponse } from "@/lib/fetchKamar";
 import { useState } from "react";
-import { IKamar } from "@/models/Kamar";
+import { IKamar, IKamarInput } from "@/models/Kamar";
 import EditKamarForm from "../forms/EditKamarForm";
 
 const EditKamarButton = ({
@@ -17,7 +17,7 @@ const EditKamarButton = ({
     updateData
   } : {
     kamarId: string,
-    updateData: IKamar
+    updateData: IKamarInput
   }) => Promise<APIResponse>,
 }) => {
 

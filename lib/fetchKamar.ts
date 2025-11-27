@@ -1,4 +1,4 @@
-import { IKamar } from "@/models/Kamar";
+import { IKamar, IKamarInput } from "@/models/Kamar";
 
 interface ApiResponse {
   success: boolean;
@@ -57,7 +57,7 @@ export interface APIResponse {
     error?: string;
 }
 
-export async function postKamar(newKamarData: IKamar): Promise<APIResponse> {
+export async function postKamar(newKamarData: IKamarInput): Promise<APIResponse> {
     const endpoint = '/api/kamar';
     
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL; 
@@ -124,7 +124,7 @@ export async function deleteKamar(kamarId: string): Promise<APIResponse> {
     }
 }
 
-export async function editKamar(kamarId: string, updateData: IKamar): Promise<APIResponse> {
+export async function editKamar(kamarId: string, updateData: IKamarInput): Promise<APIResponse> {
     const endpoint = `/api/kamar/${kamarId}`;
     
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL; 

@@ -1,6 +1,6 @@
 "use client"
 import { useRef, FormEvent } from "react";
-import { IKamar } from "@/models/Kamar";
+import { IKamarInput } from "@/models/Kamar";
 import { APIResponse } from "@/lib/fetchKamar";
 import { useRouter } from "next/navigation";
 
@@ -11,7 +11,7 @@ const InputKamarForm = ({
 } : {
   displayInputKamarForm: boolean;
   setDisplayInputKamarForm: React.Dispatch<React.SetStateAction<boolean>>;
-  postKamarHandler: (newKamarData: IKamar) => Promise<APIResponse>;
+  postKamarHandler: (newKamarData: IKamarInput) => Promise<APIResponse>;
 }) => {
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -24,7 +24,7 @@ const InputKamarForm = ({
     try {
       const rawData = Object.fromEntries(new FormData(formRef.current).entries());
 
-      const newKamarData: IKamar = {
+      const newKamarData: IKamarInput = {
           nomor_unit: String(rawData.nomor_unit),
           harga_sewa: parseInt(String(rawData.harga_sewa), 10),
           status_ketersediaan: (rawData.status_ketersediaan) === 'true',
@@ -49,7 +49,7 @@ const InputKamarForm = ({
       <section className="bg-white text-gray-700 p-6 rounded-2xl min-w-xl shadow-2xl border border-gray-300">
         <div className="flex justify-between items-center">
           <h3 className="font-bold text-2xl">Tambah kamar</h3>
-          <button onClick={() => setDisplayInputKamarForm(!displayInputKamarForm)} className="text-white bg-blue-400 p-2 px-4 rounded-2xl font-semibold border border-gray-400 shadow-lg cursor-pointer">Tutup</button>
+          <button onClick={() => setDisplayInputKamarForm(!displayInputKamarForm)} className="hover:scale-105 active:scale-100 transition-all duration-300 ease-in-out text-white bg-blue-400 p-2 px-4 rounded-2xl font-semibold border border-gray-400 shadow-lg cursor-pointer">Tutup</button>
         </div>
         <form
           ref={formRef}
@@ -106,7 +106,7 @@ const InputKamarForm = ({
           </div>
           <button
             type="submit"
-            className="bg-blue-400 text-white font-semibold p-3 mt-4 border cursor-pointer shadow-lg border-gray-400 rounded-2xl"
+            className="hover:scale-102 active:scale-100 transition-all duration-300 ease-in-out bg-blue-400 text-white font-semibold p-3 mt-4 border cursor-pointer shadow-lg border-gray-400 rounded-2xl"
           >
             Tambah kamar
           </button>
