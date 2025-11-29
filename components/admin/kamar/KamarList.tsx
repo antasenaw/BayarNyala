@@ -2,6 +2,7 @@ import { IKamar, IKamarInput } from "@/models/Kamar";
 import { APIResponse } from "@/lib/fetchKamar";
 import DeleteKamarButton from "./buttons/DeleteKamarButton";
 import EditKamarButton from "./buttons/EditKamarButton";
+import { formatToRupiah } from "@/utils/formatToRupiah";
 
 const KamarList = ({
   kamarList,
@@ -30,7 +31,7 @@ const KamarList = ({
               <p className="text-gray-400 basis-0 grow-[0.1]">{i+1}</p>
               <p className="basis-0 grow">{kamar.nomor_unit}</p>
               <p className="basis-0 grow">{kamar.status_ketersediaan ? 'Tersedia' : 'Terisi'}</p>
-              <p className="basis-0 grow">Rp. {kamar.harga_sewa}</p>
+              <p className="basis-0 grow">{formatToRupiah(kamar.harga_sewa)}</p>
               <div className="basis-0 grow justify-center flex gap-8">
                 <EditKamarButton
                   kamarId={String(kamar._id)}

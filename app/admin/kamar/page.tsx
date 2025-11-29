@@ -5,16 +5,17 @@ import { getKamar, postKamar, deleteKamar, getKamarById, editKamar } from "@/lib
 import { IKamarInput } from "@/models/Kamar";
 import { revalidatePath } from "next/cache";
 
+
 const Page = async () => {
   const kamarList = await getKamar();
-
+  
   const postKamarHandler = async (newKamarData: IKamarInput) => {
     "use server"
     const response = await postKamar(newKamarData);
     if (response) revalidatePath('/admin/kamar', 'page');
     return response
   }
-
+  
   const deleteKamarHandler = async (kamarId: string) => {
     "use server"
     const response = await deleteKamar(kamarId);

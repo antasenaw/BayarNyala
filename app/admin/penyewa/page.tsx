@@ -1,6 +1,7 @@
 import Navbar from "@/components/admin/Navbar"
 
-const page = () => {
+const page = async () => {
+
   return (
     <div className="h-full w-full bg-white flex">
       <Navbar />
