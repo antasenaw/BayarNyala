@@ -3,6 +3,7 @@ import { useRef, FormEvent } from "react";
 import { IKamarInput } from "@/models/Kamar";
 import { APIResponse } from "@/lib/fetchKamar";
 import { useRouter } from "next/navigation";
+import { getUserIdFromSession } from "@/lib/getUser";
 
 const InputKamarForm = ({
   displayInputKamarForm,
@@ -23,12 +24,14 @@ const InputKamarForm = ({
 
     try {
       const rawData = Object.fromEntries(new FormData(formRef.current).entries());
+      const userId = await getUserIdFromSession();
+      if (!userId) return '';
 
       const newKamarData: IKamarInput = {
           nomor_unit: String(rawData.nomor_unit),
           harga_sewa: parseInt(String(rawData.harga_sewa), 10),
           status_ketersediaan: (rawData.status_ketersediaan) === 'true',
-          managed_by: '6924ad994524bee457cab0a4'
+          managed_by: userId
       };
       
       const response = await postKamarHandler(newKamarData);
