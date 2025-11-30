@@ -27,7 +27,7 @@ const Page = () => {
             {state?.errors?.nama && <p className="text-red-500">{state.errors.nama}</p>}
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="email" className="text-gray-600">Alamat email</label>
+            <label htmlFor="email" className="text-gray-500">Alamat email</label>
             <input
               type="text"
               id="email"
@@ -56,6 +56,28 @@ const Page = () => {
                 </ul>
               </div>
             )}
+          </div>
+          <label className="text-gray-500">Daftar sebagai:</label>
+          <div className="flex items-center gap-2 text-gray-600">
+            <input
+              type="radio" 
+              name="role" 
+              id="role"
+              value="Penyewa"
+              required
+              defaultChecked
+            />
+            <label htmlFor="role">Penyewa kos</label>
+          </div>
+          <div className="flex items-center gap-2 text-gray-600">
+            <input
+              type="radio" 
+              name="role" 
+              id="role"
+              value="Admin"
+              required
+            />
+            <label htmlFor="role">Pemilik kos</label>
           </div>
           <button type="submit" disabled={pending} className={`${pending ? 'bg-blue-600' : 'bg-blue-800'} text-white font-semibold p-3 mt-4 shadow-xl cursor-pointer rounded-2xl`}>{pending ? 'Loading...' : 'Daftar'}</button>
         </form>

@@ -2,14 +2,15 @@
 
 import { SignupFormSchema, SignupFormState } from "@/lib/definitions"
 import { postUser } from "@/lib/fetchUser";
-import { NewUserData } from "@/lib/fetchUser";
 import { createSession } from "@/lib/session";
+import { redirect } from "next/navigation";
 
 export async function signup (state: SignupFormState, formData: FormData) {
   const validatedFields = SignupFormSchema.safeParse({
     nama: formData.get('name'),
     email: formData.get('email'),
     password: formData.get('password'),
+    role: formData.get('role')
   });
 
   if (!validatedFields.success) {
@@ -18,12 +19,7 @@ export async function signup (state: SignupFormState, formData: FormData) {
     }
   }
 
-  const newUser: NewUserData = {
-    ...validatedFields.data,
-    role: 'Penyewa'
-  }
-
-  const response = await postUser(newUser);
+  const response = await postUser(validatedFields.data);
 
   if (!response.user) {
     return {
@@ -33,5 +29,6 @@ export async function signup (state: SignupFormState, formData: FormData) {
     }
   }
   
-  await createSession(response.user.role);
+  await createSession(String(response.user._id), response.user.role);
+  redirect('/dashboard');
 }

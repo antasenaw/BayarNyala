@@ -12,6 +12,9 @@ export const SignupFormSchema = z.object({
     .regex(/[a-zA-Z]/, { error: 'Memiliki setidaknya 1 huruf.' })
     .regex(/[0-9]/, { error: 'Memiliki setidaknya 1 angka.' })
     .trim(),
+  role: z
+    .string()
+    .trim(),
 })
  
 export type SignupFormState =
@@ -20,6 +23,7 @@ export type SignupFormState =
         nama?: string[]
         email?: string[]
         password?: string[]
+        role?: string[]
       }
       message?: string
     }
@@ -46,6 +50,7 @@ export type LoginFormState =
   | undefined
 
 export type SessionPayload = {
+  id: string
   role: string,
   expiresAt: Date,
 }

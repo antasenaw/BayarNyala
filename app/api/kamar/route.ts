@@ -1,13 +1,17 @@
-import { NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Kamar from "@/models/Kamar";
 import "@/models/User";  // ← TAMBAHKAN INI untuk register model User
+import getUserIdFromSession from "@/lib/getUserIdFromSession";
 
 export async function GET(){
     try {
         await connectDB();
 
-        const kamarList = await Kamar.find()
+        const userId = await getUserIdFromSession();
+        console.log(userId)
+
+        const kamarList = await Kamar.find({managed_by: userId})
         .populate("managed_by", "nama email role")  // ← PERBAIKI: "managed_by" bukan "Manage By"
         .sort({ nomor_unit: 1 });
 

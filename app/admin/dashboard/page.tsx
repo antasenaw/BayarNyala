@@ -1,4 +1,5 @@
 import KamarStatus from "@/components/admin/dashboard/KamarStatus"
+import LogoutButton from "@/components/admin/LogoutButton"
 import Navbar from "@/components/admin/Navbar"
 
 const page = () => {
@@ -6,8 +7,9 @@ const page = () => {
     <div className="h-full w-full bg-white flex">
       <Navbar />
       <main className="flex flex-col grow">
-        <div className="p-8">
+        <div className="p-8 flex items-center justify-between">
           <h2 className="font-extrabold text-2xl text-blue-800">Dashboard</h2>
+          <LogoutButton></LogoutButton>
         </div>
         <section className="flex mx-8 gap-8 mb-8 flex-wrap">
           <KamarStatus />

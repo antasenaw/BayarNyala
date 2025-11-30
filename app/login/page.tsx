@@ -22,9 +22,8 @@ const Page = () => {
               name="email"
               className="border border-gray-400 p-3 shadow-xl rounded-2xl"
               placeholder="Masukkan email"
-              
             />
-            {state?.errors?.email && <p className="text-red-500">{state.errors.email}</p>}
+            {state?.errors?.email && <p className="text-red-500">{state.errors.email} {state.errors.email[0] === 'Email tidak terdaftar.' && <Link href='/signup' className="text-blue-600 hover:underline">Daftar sekarang</Link>}</p>}
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="password" className="text-gray-500">Password</label>

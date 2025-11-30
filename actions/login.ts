@@ -40,6 +40,10 @@ export async function login(state: LoginFormState, formData: FormData) {
 
   if (!isPasswordValid) return {errors: {password: ['Password salah.']}}
 
-  await createSession(user.role);
-  redirect('/admin/dashboard');
+  await createSession(user._id, user.role);
+  if (user.role === 'Admin') {
+    redirect('/admin/dashboard');
+  } else {
+    redirect('/dashboard')
+  }
 }

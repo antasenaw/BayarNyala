@@ -1,4 +1,6 @@
 import { IKamar, IKamarInput } from "@/models/Kamar";
+import { headers } from "next/headers";
+
 
 interface ApiResponse {
   success: boolean;
@@ -13,7 +15,9 @@ export async function getKamar(): Promise<IKamar[]> {
     console.error("BASE_URL is not defined in the environment.");
     return [];
   }
-  
+
+  const cookieHeader = (await headers()).get("cookie") ?? "";
+
   const fullUrl = `${baseUrl}${endpoint}`;
 
   try {
@@ -21,12 +25,13 @@ export async function getKamar(): Promise<IKamar[]> {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json', 
+        Cookie: cookieHeader,
       },
-      
-      next: { 
-        revalidate: 60,
-        tags: ['kamar-list']
-      }
+      cache: 'no-store'
+      // next: { 
+      //   revalidate: 60,
+      //   tags: ['kamar-list']
+      // }
     });
 
     if (!response.ok) {
