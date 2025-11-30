@@ -1,7 +1,10 @@
 "use client"
+import { login } from "@/actions/login"
 import Link from "next/link"
+import { useActionState } from "react"
 
 const Page = () => {
+  const [state, action, pending] = useActionState(login, undefined);
 
   return (
     <main className="flex items-center justify-center h-full w-full bg-white">
@@ -10,7 +13,7 @@ const Page = () => {
           <h1 className="font-bold text-2xl">Masuk</h1>
           <Link href='/signup' className="text-blue-600 hover:underline">Saya tidak memiliki akun</Link>
         </div>
-        <form className="p-6 flex flex-col gap-4">
+        <form action={action} className="p-6 flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <label htmlFor="email" className="text-gray-600">Alamat email</label>
             <input
@@ -19,8 +22,9 @@ const Page = () => {
               name="email"
               className="border border-gray-400 p-3 shadow-xl rounded-2xl"
               placeholder="Masukkan email"
+              
             />
-            {/* {state?.errors?.email && <p className="text-red-500">{state.errors.email}</p>} */}
+            {state?.errors?.email && <p className="text-red-500">{state.errors.email}</p>}
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="password" className="text-gray-500">Password</label>
@@ -31,14 +35,9 @@ const Page = () => {
               className="border border-gray-400 p-3 shadow-xl rounded-2xl"
               placeholder="Masukkan password"
             />
-            {/* {state?.errors?.password && (
-              <p className="text-red-500">{state.errors.password}</p>
-            )} */}
+            {state?.errors?.password && (<p className="text-red-500">{state.errors.password}</p>)}
           </div>
-          {/* {pending ? */}
-          {/* <button disabled className="bg-blue-600 text-white font-semibold p-3 mt-4 cursor-pointer shadow-xl rounded-2xl">Loading...</button> : */}
-          <button type="submit" className="bg-blue-800 text-white font-semibold p-3 mt-4 cursor-pointer shadow-xl rounded-2xl">Masuk</button>
-          {/* } */}
+          <button disabled={pending} className={`${pending ? 'bg-blue-800' : 'bg-blue-600'} text-white font-semibold p-3 mt-4 cursor-pointer shadow-xl rounded-2xl`}>{pending ? 'Loading...' : 'Masuk'}</button>
         </form>
       </section>
     </main>

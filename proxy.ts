@@ -17,8 +17,12 @@ export default async function proxy (request: NextRequest) {
   const cookie = (await cookies()).get('session')?.value;
   const session = await decrypt(cookie);
 
-  if (isProtectedRoute && (session?.role === 'Penyewa' || !session?.role)) {
-    return NextResponse.redirect(new URL('/login', request.nextUrl))
+  if (isProtectedRoute && !session?.role) {
+    return NextResponse.redirect(new URL('/login', request.nextUrl));
+  }
+
+  if (isProtectedRoute && session?.role === 'Penyewa') {
+    return NextResponse.redirect(new URL('/', request.nextUrl));
   }
 
   if (isPublicRoute && session?.role === 'Admin') {

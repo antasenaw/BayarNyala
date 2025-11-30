@@ -31,6 +31,7 @@ export const LoginFormSchema = z.object({
     .trim(),
   password: z
     .string()
+    .nonempty({error: 'Masukkan password anda'})
     .trim(),
 })
  
