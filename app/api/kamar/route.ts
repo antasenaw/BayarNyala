@@ -9,9 +9,9 @@ export async function GET(){
         await connectDB();
 
         const userId = await getUserIdFromSession();
-        console.log(userId);
+        console.log(userId)
 
-        const kamarList = await Kamar.find()
+        const kamarList = await Kamar.find({managed_by: userId})
         .populate("managed_by", "nama email role")  // ← PERBAIKI: "managed_by" bukan "Manage By"
         .sort({ nomor_unit: 1 });
 

@@ -4,7 +4,7 @@ import Navbar from "@/components/admin/Navbar"
 import { getUserName } from "@/lib/getUser"
 
 const page = async () => {
-  // const userName = await getUserName();
+  const userName = await getUserName();
 
   return (
     <div className="h-full w-full bg-white flex">
@@ -13,7 +13,7 @@ const page = async () => {
         <div className="p-8 flex items-center justify-between">
           <h2 className="font-extrabold text-2xl text-blue-800">Dashboard</h2>
           <div className="flex items-center gap-4">
-            {/* <p>Hai, {userName}!</p> */}
+            <p>Hai, {userName}!</p>
             <LogoutButton/>
           </div>
         </div>

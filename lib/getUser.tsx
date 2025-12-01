@@ -10,19 +10,23 @@ export async function getUserIdFromSession() {
 
   if (!session) return null;
 
-  const { buffer } = await session.id;
-  const byteValues = Object.values(buffer);
-  const idBuffer = Buffer.from(byteValues);
-  const userId = idBuffer.toString('hex');
+  // console.log(session);
+  
+  const userId = session.id
 
-  return userId;
+  // const { buffer } = await session.id;
+  // const byteValues = Object.values(buffer);
+  // const idBuffer = Buffer.from(byteValues);
+  // const userId = idBuffer.toString('hex');
+
+  return userId as string;
 }
 
 export async function getUser() {
   const userId = await getUserIdFromSession();
   if (!userId) return null;
 
-  const { user } = await getUserById(userId);
+  const user = await getUserById(userId);
   if (!user) return null;
   
   return user;
@@ -31,6 +35,6 @@ export async function getUser() {
 export async function getUserName() {
   const user = await getUser();
   if (!user) return null;
-  return user.nama;
+  return user.user?.nama;
 }
 
