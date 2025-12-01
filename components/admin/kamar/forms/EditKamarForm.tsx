@@ -1,5 +1,6 @@
 "use client"
 import { APIResponse } from "@/lib/fetchKamar";
+import { getUserIdFromSession } from "@/lib/getUser";
 import { IKamar, IKamarInput } from "@/models/Kamar";
 import { useRouter } from "next/navigation";
 import { useRef, FormEvent } from "react";
@@ -34,12 +35,14 @@ const EditKamarForm = ({
 
     try {
       const rawData = Object.fromEntries(new FormData(formRef.current).entries());
+      const userId = await getUserIdFromSession();
+      if (!userId) return '';
 
       const updateData: IKamarInput = {
           nomor_unit: String(rawData.nomor_unit),
           harga_sewa: parseInt(String(rawData.harga_sewa), 10),
           status_ketersediaan: (rawData.status_ketersediaan) === 'true',
-          managed_by: '6924ad994524bee457cab0a4'
+          managed_by: userId
       };
       
       const response = await editKamarHandler({ kamarId, updateData });
