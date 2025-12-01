@@ -16,8 +16,7 @@ export async function getKamar(): Promise<IKamar[]> {
     return [];
   }
 
-//   const cookieHeader: string = (await headers()).get("cookie") ?? "";
-//   console.log(cookieHeader)
+  const cookieHeader = (await headers()).get("cookie") ?? "";
 
   const fullUrl = `${baseUrl}${endpoint}`;
 
