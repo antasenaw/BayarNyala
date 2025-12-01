@@ -1,5 +1,5 @@
 import LogoutButton from "@/components/admin/LogoutButton"
-import Navbar from "@/components/admin/Navbar"
+import Navbar from "@/components/penyewa/Navbar";
 import { getUserName } from "@/lib/getUser"
 
 const page = async () => {
@@ -15,7 +15,7 @@ const page = async () => {
       </div>
       <main>
         <div className="p-8">
-          <h1 className="font-extrabold text-2xl text-blue-800">Kelola pembayaran</h1>
+          <h1 className="font-extrabold text-2xl text-blue-800">Dashboard</h1>
         </div>
       </main>
     </div>

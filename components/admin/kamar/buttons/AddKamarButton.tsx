@@ -15,7 +15,7 @@ const AddKamarButton = ({
     <>
       <button 
         onClick={() => setDisplayInputKamarForm(!displayInputKamarForm)}
-        className="p-2 px-4 border border-gray-400 cursor-pointer shadow-lg font-semibold rounded-2xl text-gray-600 bg-white hover:scale-105 active:scale-100 transition-all duration-300 ease-in-out"
+        className="p-2 px-4 border border-gray-400 cursor-pointer shadow-lg font-semibold rounded-2xl text-blue-600 bg-white hover:scale-105 active:scale-100 transition-all duration-300 ease-in-out"
       >
         Tambah kamar
       </button>

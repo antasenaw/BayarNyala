@@ -23,7 +23,7 @@ const DeleteKamarForm = ({
             }} className="bg-blue-400 text-white grow basis-0 cursor-pointer hover:scale-105  active:scale-100 transition-all duration-300 ease-in-out border border-gray-400 rounded-2xl py-2 shadow-lg font-semibold text-lg">
               Tidak
             </button>
-            <button onClick={deleteKamar} className="basis-0 grow cursor-pointer hover:scale-105  active:scale-100 transition-all duration-300 ease-in-out border border-gray-400 rounded-2xl py-2 shadow-lg font-semibold text-lg">
+            <button onClick={deleteKamar} className="basis-0 grow cursor-pointer hover:scale-105  active:scale-100 transition-all duration-300 ease-in-out border border-blue-400 rounded-2xl py-2 shadow-lg font-semibold text-lg">
               Ya
             </button>
           </div>

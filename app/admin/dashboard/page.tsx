@@ -7,17 +7,23 @@ const page = async () => {
   const userName = await getUserName();
 
   return (
-    <div className="h-full w-full bg-white flex">
+    <div className="h-full w-full bg-white flex flex-col gap-8">
+    <div className="flex items-center gap-4 mt-4 mx-4">
       <Navbar />
-      <main className="flex flex-col grow">
-        <div className="p-8 flex items-center justify-between">
+      <div className="flex gap-4 items-center border py-2 px-4 rounded-2xl border-gray-300 shadow-lg">
+        <p>{userName}</p>
+        <LogoutButton/>
+      </div>
+    </div>
+      <main className="flex flex-col grow mx-8 gap-8">
+        {/* <div className="p-8 flex items-center justify-between">
           <h2 className="font-extrabold text-2xl text-blue-800">Dashboard</h2>
           <div className="flex items-center gap-4">
             <p>Hai, {userName}!</p>
             <LogoutButton/>
           </div>
-        </div>
-        <section className="flex mx-8 gap-8 mb-8 flex-wrap">
+        </div> */}
+        <section className="flex gap-8 flex-wrap">
           <KamarStatus />
           <div className="basis-0 grow">
             <h3 className="mb-4 font-bold text-blue-600 text-xl">Pembayaran terbaru</h3>
@@ -49,8 +55,9 @@ const page = async () => {
             </div>
           </div>
         </section>
-        <section className="px-8">
-          <h3 className="font-bold text-blue-600 text-xl">Aktivitas bulanan</h3>
+        <section className="">
+          <h3 className="font-bold text-blue-600 text-xl mb-4">Aktivitas bulanan</h3>
+          <div className="border p-4 rounded-2xl border-gray-400">m</div>
         </section>
       </main>
     </div>

@@ -79,7 +79,7 @@ const Page = () => {
             />
             <label htmlFor="role">Pemilik kos</label>
           </div>
-          <button type="submit" disabled={pending} className={`${pending ? 'bg-blue-600' : 'bg-blue-800'} text-white font-semibold p-3 mt-4 shadow-xl cursor-pointer rounded-2xl`}>{pending ? 'Loading...' : 'Daftar'}</button>
+          <button type="submit" disabled={pending} className={`${pending ? 'bg-white text-blue-800 border-blue-800' : 'bg-blue-800 text-white border-gray-400'} border font-semibold p-3 mt-4 cursor-pointer shadow-xl rounded-2xl hover:scale-102 active:scale-98 transition-all duration-300 ease-in-out`}>{pending ? 'Loading...' : 'Daftar'}</button>
         </form>
       </section>
     </main>

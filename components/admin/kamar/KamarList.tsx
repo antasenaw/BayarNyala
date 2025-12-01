@@ -17,7 +17,7 @@ const KamarList = ({
 }) => {
   return (
     <div className="rounded-2xl border border-gray-400 text-gray-600 shadow-xl">
-      <div className={`text-center text-white font-semibold flex p-3 border border-gray-400 bg-blue-400 rounded-2xl m-2 ${kamarList.length === 0 || 'mb-0'} shadow-xl`}>
+      <div className={`text-center text-white font-semibold flex p-3 border border-gray-400 bg-blue-600 rounded-2xl m-2 ${kamarList.length === 0 || 'mb-0'} shadow-xl`}>
         <p className="text-gray-300 basis-0 grow-[0.1]">No</p>
         <p className="basis-0 grow">Nomor kamar</p>
         <p className="basis-0 grow">Status kamar</p>
