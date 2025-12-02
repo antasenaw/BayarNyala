@@ -24,10 +24,10 @@ const KamarList = ({
         <p className="basis-0 grow">Harga sewa</p>
         <p className="basis-0 grow">Aksi</p>
       </div>
-      <div className="max-h-[44.55rem] overflow-y-auto rounded-2xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <ul className="max-h-[44.55rem] overflow-y-auto rounded-2xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {kamarList.map((kamar: IKamar, i: number) => {
           return (
-            <div key={String(kamar._id)} className="text-center flex p-3 border border-gray-400 m-2 shadow-lg rounded-2xl">
+            <li key={String(kamar._id)} className="text-center flex p-3 border border-gray-400 m-2 shadow-lg rounded-2xl">
               <p className="text-gray-400 basis-0 grow-[0.1]">{i+1}</p>
               <p className="basis-0 grow">{kamar.nomor_unit}</p>
               <p className="basis-0 grow">{kamar.status_ketersediaan ? 'Tersedia' : 'Terisi'}</p>
@@ -43,10 +43,10 @@ const KamarList = ({
                   deleteKamarHandler={deleteKamarHandler}
                 />
               </div>
-            </div>
+            </li>
           );
         })}
-      </div>
+      </ul>
     </div>
   )
 }

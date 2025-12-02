@@ -9,20 +9,13 @@ export async function getUserIdFromSession() {
   const session = await decrypt(cookie);
 
   if (!session) return null;
-
-  // console.log(session);
   
   const userId = session.id
-
-  // const { buffer } = await session.id;
-  // const byteValues = Object.values(buffer);
-  // const idBuffer = Buffer.from(byteValues);
-  // const userId = idBuffer.toString('hex');
 
   return userId as string;
 }
 
-export async function getUser() {
+export async function getUserbyIdHandler() {
   const userId = await getUserIdFromSession();
   if (!userId) return null;
 
@@ -33,8 +26,14 @@ export async function getUser() {
 }
 
 export async function getUserName() {
-  const user = await getUser();
+  const user = await getUserbyIdHandler();
   if (!user) return null;
   return user.user?.nama;
+}
+
+export async function getUserRole() {
+  const user = await getUserbyIdHandler();
+  if (!user) return null;
+  return user.user?.role;
 }
 

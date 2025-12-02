@@ -1,7 +1,5 @@
 import { IKamar, IKamarInput } from "@/models/Kamar";
 import { headers } from "next/headers";
-import { getUser, getUserIdFromSession } from "./getUser";
-
 
 interface ApiResponse {
   success: boolean;
@@ -18,10 +16,6 @@ export async function getKamar(): Promise<IKamar[]> {
   }
 
   const cookieHeader = (await headers()).get("cookie") ?? "";
-//   console.log(cookieHeader)
-
-//   const userId = await getUserIdFromSession();
-//   console.log(userId)
 
   const fullUrl = `${baseUrl}${endpoint}`;
 

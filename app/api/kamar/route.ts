@@ -2,16 +2,25 @@ import {  NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Kamar from "@/models/Kamar";
 import "@/models/User";  // ← TAMBAHKAN INI untuk register model User
-import { getUserIdFromSession } from "@/lib/getUser";
+import { getUserIdFromSession, getUserRole } from "@/lib/getUser";
 
 export async function GET(){
     try {
         await connectDB();
 
-        const userId = await getUserIdFromSession();
-        console.log(userId)
+        const userRole = await getUserRole();
+        console.log(userRole)
+        
+        const filter = async () => {
+            if (userRole === 'Admin') {
+                const userId = await getUserIdFromSession();
+                return { managed_by: userId }
+            } else {
+                return {}
+            }
+        }
 
-        const kamarList = await Kamar.find({managed_by: userId})
+        const kamarList = await Kamar.find(await filter())
         .populate("managed_by", "nama email role")  // ← PERBAIKI: "managed_by" bukan "Manage By"
         .sort({ nomor_unit: 1 });
 

@@ -25,9 +25,9 @@ export default function Home() {
           </nav>
         </header>
         <main className="flex flex-col h-full w-full justify-center gap-4 pl-24">
-          <h1 className="font-bold text-8xl text-blue-800 flex items-center">BayarNyala</h1>
-          <p className="text-2xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />Integer posuere sollicitudin tellus, eget mollis neque auctor nec. <br />Vestibulum vehicula, dolor quis consectetur ornare, <br />diam lorem molestie purus, gravida bibendum ipsum quam at massa.</p>
-          <div className="flex text-2xl gap-4 font-semibold">
+          <h1 className="font-bold text-7xl text-blue-800 flex items-center">BayarNyala</h1>
+          <p className="text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />Integer posuere sollicitudin tellus, eget mollis neque auctor nec. <br />Vestibulum vehicula, dolor quis consectetur ornare, <br />diam lorem molestie purus, gravida bibendum ipsum quam at massa.</p>
+          <div className="flex text-xl gap-4 font-semibold">
             <Link href='/login' className="bg-blue-600 text-white shadow-xl py-4 px-8 rounded-2xl border border-gray-300 hover:scale-105 active:scale-95 transition-all duration-300 ease-in-out">Masuk</Link>
             <Link href='/signup' className="bg-white text-blue-600 shadow-xl py-4 px-8 rounded-2xl border border-blue-600 hover:scale-105 active:scale-95 transition-all duration-300 ease-in-out">Daftar</Link>
           </div>
