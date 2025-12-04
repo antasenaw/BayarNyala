@@ -9,14 +9,13 @@ export async function GET(){
         await connectDB();
 
         const userRole = await getUserRole();
-        console.log(userRole)
         
         const filter = async () => {
             if (userRole === 'Admin') {
                 const userId = await getUserIdFromSession();
                 return { managed_by: userId }
             } else {
-                return {}
+                return {status_ketersediaan: true}
             }
         }
 

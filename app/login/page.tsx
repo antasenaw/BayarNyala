@@ -36,7 +36,7 @@ const Page = () => {
             />
             {state?.errors?.password && (<p className="text-red-500">{state.errors.password}</p>)}
           </div>
-          <button disabled={pending} className={`${pending ? 'bg-white text-blue-800 border-blue-800' : 'bg-blue-800 text-white border-gray-400'} border font-semibold p-3 mt-4 cursor-pointer shadow-xl rounded-2xl hover:scale-102 active:scale-98 transition-all duration-300 ease-in-out`}>{pending ? 'Loading...' : 'Masuk'}</button>
+          <button disabled={pending} className={`${pending ? 'bg-white text-blue-600 border-blue-600' : 'bg-blue-600 text-white border-gray-400'} border font-semibold p-3 mt-4 cursor-pointer shadow-xl rounded-2xl hover:scale-102 active:scale-98 transition-all duration-300 ease-in-out`}>{pending ? 'Loading...' : 'Masuk'}</button>
         </form>
       </section>
     </main>

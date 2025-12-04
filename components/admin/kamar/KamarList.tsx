@@ -16,24 +16,26 @@ const KamarList = ({
   editKamarHandler: ({ kamarId, updateData }: { kamarId: string, updateData: IKamarInput }) => Promise<APIResponse>
 }) => {
   return (
-    <div className="rounded-2xl border border-gray-400 text-gray-600 shadow-xl">
-      <div className={`text-center text-white font-semibold flex p-3 border border-gray-400 bg-blue-600 rounded-2xl m-2 ${kamarList.length === 0 || 'mb-0'} shadow-xl`}>
-        <p className="text-gray-300 basis-0 grow-[0.1]">No</p>
-        <p className="basis-0 grow">Nomor kamar</p>
-        <p className="basis-0 grow">Status kamar</p>
-        <p className="basis-0 grow">Harga sewa</p>
-        <p className="basis-0 grow">Aksi</p>
-      </div>
-      <ul className="max-h-[44.55rem] overflow-y-auto rounded-2xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {kamarList.map((kamar: IKamar, i: number) => {
+    <ul className="flex-1 overflow-y-auto mt-4 border border-gray-400 rounded-2xl p-4">
+      <div className=" grid grid-cols-4 gap-4">
+        {kamarList.map(kamar => {
           return (
-            <li key={String(kamar._id)} className="text-center flex p-3 border border-gray-400 m-2 shadow-lg rounded-2xl">
-              <p className="text-gray-400 basis-0 grow-[0.1]">{i+1}</p>
-              <p className="basis-0 grow">{kamar.nomor_unit}</p>
-              <p className="basis-0 grow">{kamar.status_ketersediaan ? 'Tersedia' : 'Terisi'}</p>
-              <p className="basis-0 grow">{formatToRupiah(kamar.harga_sewa)}</p>
-              <div className="basis-0 grow justify-center flex gap-8">
-                <EditKamarButton
+            <li key={String(kamar._id)} className="border shadow-lg transition-all duration-300 ease-in-out border-gray-400 self-start rounded-2xl p-4 flex flex-col">
+              <div className="flex justify-between items-center border-b border-gray-400 pb-4">
+                <h3 className="font-bold text-3xl">{kamar.nomor_unit}</h3>
+                {
+                  kamar.status_ketersediaan ?
+                  <p className="py-2 px-4 bg-green-100 rounded-2xl text-green-500 font-semibold border border-green-300">Tersedia</p> :
+                  <p className="py-2 px-4 bg-red-100 rounded-2xl text-red-500 font-semibold border border-red-300">Terisi</p>
+                }
+              </div>
+              <p className="mt-4 text-gray-400">Harga sewa :</p>
+              <p className="font-bold text-blue-600 text-4xl">{formatToRupiah(kamar.harga_sewa)}<span className="text-[1rem] font-normal text-gray-400">/bulan</span></p>
+              {/* <p className="mt-4 text-gray-400">Pemilik :</p>
+              <p className="font-semibold text-gray-500">{Object(kamar.managed_by).nama}</p> */}
+              {/* <button className="mt-4 cursor-pointer bg-blue-600 py-2 px-4 rounded-2xl font-semibold text-white border border-gray-400 hover:scale-102 active:scale-98 transition-all duration-300 ease-in-out">Sewa</button> */}
+            <div className="flex mt-4 gap-4">
+              <EditKamarButton
                   kamarId={String(kamar._id)}
                   getKamarByIdHandler={getKamarByIdHandler}
                   editKamarHandler={editKamarHandler}
@@ -42,12 +44,13 @@ const KamarList = ({
                   kamarId={String(kamar._id)}
                   deleteKamarHandler={deleteKamarHandler}
                 />
-              </div>
+            </div>
             </li>
           );
         })}
-      </ul>
-    </div>
+        
+      </div>
+    </ul>
   )
 }
 

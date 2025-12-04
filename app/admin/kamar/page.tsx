@@ -42,18 +42,17 @@ const Page = async () => {
   const userName = await getUserName();
 
   return (
-    <div className="h-full w-full bg-white flex flex-col gap-8">
-      <div className="flex items-center gap-4 mt-4 mx-4">
+    <div className="h-screen max-h-screen w-full relative bg-white flex flex-col p-4 pb-8">
+      <div className="shrink-0 flex items-center gap-4">
         <Navbar />
         <div className="flex gap-4 items-center border py-2 px-4 rounded-2xl border-gray-300 shadow-lg">
           <p className="">{userName}</p>
           <LogoutButton/>
         </div>
       </div>
-      <main className="grow relative mx-8">
-        {/* <h2 className="font-extrabold text-2xl m-8 mb-4 text-blue-800">Kelola kamar</h2> */}
-          <section className="">
-            <div className="flex border bg-blue-600 border-gray-400 mb-4 rounded-2xl p-3 shadow-xl justify-between">
+      <main className="flex-1 flex flex-col mt-8 mx-4 min-h-0">
+          <section className="flex-1 flex flex-col overflow-hidden min-h-0">
+            <div className="flex shrink-0 border bg-blue-600 border-gray-400 rounded-2xl p-3 shadow-xl justify-between">
               <input type="text" className="border border-gray-400 bg-white p-2 px-4 rounded-2xl shadow-lg" placeholder="Cari kamar" />
               <AddKamarButton postKamarHandler={postKamarHandler}/>
             </div>

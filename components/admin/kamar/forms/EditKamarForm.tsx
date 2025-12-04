@@ -63,7 +63,7 @@ const EditKamarForm = ({
       <section className="bg-white text-gray-700 p-6 rounded-2xl min-w-xl shadow-2xl border text-start border-gray-300">
         <div className="flex justify-between items-center">
           <h3 className="font-bold text-2xl">Edit kamar</h3>
-          <button onClick={() => setDisplayEditForm(!displayEditForm)} className="hover:scale-105 active:scale-100 transition-all duration-300 ease-in-out text-white bg-blue-400 p-2 px-4 rounded-2xl font-semibold border border-gray-400 shadow-lg cursor-pointer">Tutup</button>
+          <button onClick={() => setDisplayEditForm(!displayEditForm)} className="hover:scale-105 active:scale-100 transition-all duration-300 ease-in-out text-white bg-blue-600 p-2 px-4 rounded-2xl font-semibold border border-gray-400 shadow-lg cursor-pointer">Tutup</button>
         </div>
         <form
           ref={formRef}
@@ -123,7 +123,7 @@ const EditKamarForm = ({
           </div>
           <button
             type="submit"
-            className="hover:scale-102 active:scale-100 transition-all duration-300 ease-in-out bg-blue-400 text-white font-semibold p-3 mt-4 border cursor-pointer shadow-lg border-gray-400 rounded-2xl"
+            className="hover:scale-102 active:scale-100 transition-all duration-300 ease-in-out bg-blue-600 text-white font-semibold p-3 mt-4 border cursor-pointer shadow-lg border-gray-400 rounded-2xl"
           >
             Edit kamar
           </button>
