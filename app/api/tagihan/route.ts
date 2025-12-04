@@ -3,22 +3,27 @@ import connectDB from '@/lib/mongodb';
 import Tagihan from '@/models/Tagihan';
 import '@/models/User';
 import '@/models/Kamar';
+import { getUserIdFromSession } from '@/lib/getUser';
 
 // GET - Get all tagihan
-export async function GET(request: Request) {
+export async function GET(/*request: Request*/) {
   try {
     await connectDB();
 
-    const { searchParams } = new URL(request.url);
-    const penyewa_id = searchParams.get('penyewa_id');
-    const kamar_id = searchParams.get('kamar_id');
-    const status_pembayaran = searchParams.get('status_pembayaran');
+    const user_id = await getUserIdFromSession();
 
-    // Build query filter
-    const filter: Record<string, unknown> = {};
-    if (penyewa_id) filter.penyewa_id = penyewa_id;
-    if (kamar_id) filter.kamar_id = kamar_id;
-    if (status_pembayaran) filter.status_pembayaran = status_pembayaran;
+    const filter = {penyewa_id: user_id}
+
+    // const { searchParams } = new URL(request.url);
+    // const penyewa_id = searchParams.get('penyewa_id');
+    // const kamar_id = searchParams.get('kamar_id');
+    // const status_pembayaran = searchParams.get('status_pembayaran');
+
+    // // Build query filter
+    // const filter: Record<string, unknown> = {};
+    // if (penyewa_id) filter.penyewa_id = penyewa_id;
+    // if (kamar_id) filter.kamar_id = kamar_id;
+    // if (status_pembayaran) filter.status_pembayaran = status_pembayaran;
 
     const tagihanList = await Tagihan.find(filter)
       .populate('penyewa_id', 'nama email')
@@ -45,10 +50,10 @@ export async function POST(request: Request) {
     await connectDB();
 
     const body = await request.json();
-    const { kamar_id, penyewa_id, bulan_tahun, jumlah_tagihan, tenggat_bayar, status_pembayaran } = body;
+    const { kamar_id, penyewa_id, jumlah_tagihan, tenggat_bayar, status_pembayaran } = body;
 
     // Validasi input
-    if (!kamar_id || !penyewa_id || !bulan_tahun || !jumlah_tagihan || !tenggat_bayar) {
+    if (!kamar_id || !penyewa_id || !jumlah_tagihan || !tenggat_bayar) {
       return NextResponse.json(
         { success: false, error: 'Kamar ID, Penyewa ID, bulan tahun, jumlah tagihan, dan tenggat bayar wajib diisi' },
         { status: 400 }
@@ -67,7 +72,6 @@ export async function POST(request: Request) {
     const tagihan = await Tagihan.create({
       kamar_id,
       penyewa_id,
-      bulan_tahun: new Date(bulan_tahun),
       jumlah_tagihan,
       tenggat_bayar: new Date(tenggat_bayar),
       status_pembayaran: status_pembayaran || 'Belum Lunas',

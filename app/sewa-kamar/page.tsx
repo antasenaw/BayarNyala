@@ -30,7 +30,7 @@ const page = async () => {
                   return (
                     <li key={String(kamar._id)} className="border shadow-lg transition-all duration-300 ease-in-out border-gray-400 self-start rounded-2xl p-4 flex flex-col">
                       <div className="flex justify-between items-center border-b border-gray-400 pb-4">
-                        <h3 className="font-bold text-3xl">{kamar.nomor_unit}</h3>
+                        <h3 className="font-bold text-3xl">Kamar {kamar.nomor_unit}</h3>
                         {
                           kamar.status_ketersediaan ?
                           <p className="py-2 px-4 bg-green-100 rounded-2xl text-green-500 font-semibold border border-green-300">Tersedia</p> :

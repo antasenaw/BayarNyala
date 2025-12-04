@@ -1,10 +1,11 @@
 "use client";
 
 import { sewa } from "@/actions/sewa";
-import { useRef, useState } from "react";
+import { useActionState, useRef, useState, } from "react";
 
 const SewaKamarForm = ({ nomor_unit, pemilik, penyewa_id, kamar_id }: { nomor_unit: string, pemilik: string, penyewa_id: string, kamar_id: string }) => {
   const [formDisplay, setFormDisplay] = useState(false);
+  const [data, action, pending ] = useActionState(sewa, null);
   const overlayRef = useRef<HTMLDivElement | null>(null);
 
   return (
@@ -14,13 +15,23 @@ const SewaKamarForm = ({ nomor_unit, pemilik, penyewa_id, kamar_id }: { nomor_un
         formDisplay &&
         <>
           <div ref={overlayRef} className="backdrop-blur-xs absolute inset-0 flex justify-center items-center" onClick={e => e.target === overlayRef.current && setFormDisplay(!formDisplay)}>
-            <form action={sewa} className="bg-white text-gray-700 p-6 rounded-2xl min-w-xl shadow-2xl border border-gray-300">
+          { data && data.sucsess ?
+            <div className="bg-white text-gray-700 p-6 rounded-2xl min-w-xl shadow-2xl border border-gray-300">
               <div className="flex justify-between items-center">
-              <div>
-                <h3 className="font-bold text-2xl">Sewa kamar {nomor_unit}</h3>
-                <h4 className="text-gray-400">Pemilik: <span className="font-semibold">{pemilik}</span></h4>
+                <div>
+                  <h3 className="font-bold text-2xl">Berhasil</h3>
+                </div>
+                  <button onClick={() => setFormDisplay(!formDisplay)} className="hover:scale-105 active:scale-100 transition-all duration-300 ease-in-out text-white bg-blue-600 p-2 px-4 rounded-2xl font-semibold border border-gray-400 shadow-lg cursor-pointer">Tutup</button>
               </div>
-                <button onClick={() => setFormDisplay(!formDisplay)} className="hover:scale-105 active:scale-100 transition-all duration-300 ease-in-out text-white bg-blue-600 p-2 px-4 rounded-2xl font-semibold border border-gray-400 shadow-lg cursor-pointer">Tutup</button>
+            </div>
+            :
+            <form action={action} className="bg-white text-gray-700 p-6 rounded-2xl min-w-xl shadow-2xl border border-gray-300">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h3 className="font-bold text-2xl">Sewa kamar {nomor_unit}</h3>
+                  <h4 className="text-gray-400">Pemilik: <span className="font-semibold">{pemilik}</span></h4>
+                </div>
+                  <button onClick={() => setFormDisplay(!formDisplay)} className="hover:scale-105 active:scale-100 transition-all duration-300 ease-in-out text-white bg-blue-600 p-2 px-4 rounded-2xl font-semibold border border-gray-400 shadow-lg cursor-pointer">Tutup</button>
               </div>
               <fieldset className="p-6 flex flex-col gap-4">
                 <div className="flex flex-col gap-2">
@@ -71,14 +82,17 @@ const SewaKamarForm = ({ nomor_unit, pemilik, penyewa_id, kamar_id }: { nomor_un
                 <input className="absolute" type="hidden" name="penyewa_id" id="penyewa_id" hidden readOnly value={penyewa_id} />
                 <label className="absolute" htmlFor="kamar_id"></label>
                 <input className="absolute" type="hidden" name="kamar_id" id="kamar_id" hidden readOnly value={kamar_id} />
+                <label className="absolute" htmlFor="status"></label>
+                <input className="absolute" type="hidden" name="status" id="status" hidden readOnly value='menunggu pembayaran' />
                 <button
                   type="submit"
-                  className="hover:scale-102 active:scale-100 transition-all duration-300 ease-in-out bg-blue-600 text-white font-semibold p-3 mt-4 border cursor-pointer shadow-lg border-gray-400 rounded-2xl"
+                  className={`hover:scale-102 active:scale-100 transition-all duration-300 ease-in-out ${pending ? 'bg-white text-blue-600 border-blue-600' : 'bg-blue-600 text-white border-gray-400'} font-semibold p-3 mt-4 border cursor-pointer shadow-lg  rounded-2xl`}
                 >
                   Sewa kamar
                 </button>
               </fieldset>
             </form>
+          }
           </div>
         </>
       }
