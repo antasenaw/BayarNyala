@@ -67,10 +67,10 @@ const SewaKamarForm = ({ nomor_unit, pemilik, penyewa_id, kamar_id }: { nomor_un
                     required
                   />
                 </div>
-                <label htmlFor="penyewa_id"></label>
-                <input type="hidden" name="penyewa_id" id="penyewa_id" hidden readOnly value={penyewa_id} />
-                <label htmlFor="kamar_id"></label>
-                <input type="hidden" name="kamar_id" id="kamar_id" hidden readOnly value={kamar_id} />
+                <label className="absolute" htmlFor="penyewa_id"></label>
+                <input className="absolute" type="hidden" name="penyewa_id" id="penyewa_id" hidden readOnly value={penyewa_id} />
+                <label className="absolute" htmlFor="kamar_id"></label>
+                <input className="absolute" type="hidden" name="kamar_id" id="kamar_id" hidden readOnly value={kamar_id} />
                 <button
                   type="submit"
                   className="hover:scale-102 active:scale-100 transition-all duration-300 ease-in-out bg-blue-600 text-white font-semibold p-3 mt-4 border cursor-pointer shadow-lg border-gray-400 rounded-2xl"

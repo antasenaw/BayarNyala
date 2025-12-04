@@ -3,7 +3,6 @@ import mongoose, { Schema, Document } from 'mongoose';
 export interface ITagihan extends Document {
   kamar_id: mongoose.Types.ObjectId;
   penyewa_id: mongoose.Types.ObjectId;
-  bulan_tahun: Date;
   jumlah_tagihan: number;
   tenggat_bayar: Date;
   status_pembayaran: 'Belum Lunas' | 'Lunas';
@@ -22,10 +21,6 @@ const TagihanSchema = new Schema<ITagihan>(
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: [true, 'Penyewa ID wajib diisi'],
-    },
-    bulan_tahun: {
-      type: Date,
-      required: [true, 'Periode tagihan wajib diisi'],
     },
     jumlah_tagihan: {
       type: Number,
