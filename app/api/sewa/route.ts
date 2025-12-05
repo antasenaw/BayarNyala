@@ -3,32 +3,37 @@ import connectDB from '@/lib/mongodb';
 import Sewa from '@/models/Sewa';
 import '@/models/User';
 import '@/models/Kamar';
+import { getUserIdFromSession } from '@/lib/getUser';
 
 // GET - Get all sewa
-export async function GET(request: Request) {
+export async function GET(/*request: Request*/) {
   try {
     await connectDB();
 
-    const { searchParams } = new URL(request.url);
-    const penyewa_id = searchParams.get('penyewa_id');
-    const kamar_id = searchParams.get('kamar_id');
-    const status = searchParams.get('status');
+    const user_id = await getUserIdFromSession();
 
-    // Build query filter
-    const filter: Record<string, unknown> = {};
-    if (penyewa_id) filter.penyewa_id = penyewa_id;
-    if (kamar_id) filter.kamar_id = kamar_id;
-    if (status) filter.status = status;
+    // const { searchParams } = new URL(request.url);
+    // const penyewa_id = searchParams.get('penyewa_id');
+    // const kamar_id = searchParams.get('kamar_id');
+    // const status = searchParams.get('status');
 
-    const sewaList = await Sewa.find(filter)
+    // // Build query filter
+    // const filter: Record<string, unknown> = {};
+    // if (penyewa_id) filter.penyewa_id = penyewa_id;
+    // if (kamar_id) filter.kamar_id = kamar_id;
+    // if (status) filter.status = status;
+
+    const sewaList = await Sewa.find()
       .populate('penyewa_id', 'nama email')
-      .populate('kamar_id', 'nomor_unit harga_sewa')
+      .populate('kamar_id', 'nomor_unit harga_sewa managed_by')
       .sort({ created_at: -1 });
+
+    const sewaListFiltered = await sewaList.filter(sewa => Object(sewa.kamar_id).managed_by.toString() === user_id);
 
     return NextResponse.json({
       success: true,
-      count: sewaList.length,
-      data: sewaList,
+      count: sewaListFiltered.length,
+      data: sewaListFiltered,
     });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';

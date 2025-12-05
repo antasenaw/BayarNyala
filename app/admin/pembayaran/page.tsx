@@ -1,6 +1,8 @@
+
 import LogoutButton from "@/components/admin/LogoutButton"
 import Navbar from "@/components/admin/Navbar"
 import BuktiButton from "@/components/admin/pembayaran/BuktiButton";
+import VerifikasiButton from "@/components/admin/pembayaran/VerifikasiButton";
 import { getKamarById } from "@/lib/fetchKamar";
 import { getPembayaran } from "@/lib/fetchPembayaran";
 import { getUserName } from "@/lib/getUser"
@@ -10,7 +12,7 @@ import { isoDateConvert } from "@/utils/isoDateConvert";
 const Page = async () => {
   const userName = await getUserName();
   const pembayaranList = await getPembayaran();
-  console.log(pembayaranList)
+  // console.log(pembayaranList)
   return (
     <div className="h-screen max-h-screen w-full relative bg-white flex flex-col p-4 pb-8">
       <div className="shrink-0 flex items-center gap-4">
@@ -60,10 +62,12 @@ const Page = async () => {
                           />
                         }
                       </div>
-                      <div className="flex gap-4 items-center">
-                        <button className="py-2 px-4 mt-4 basis-0 grow border border-gray-400 cursor-pointer bg-blue-600 rounded-2xl text-white font-semibold hover:scale-105 active:scale-95 transition-all duration-300 ease-in-out">Verifikasi</button>
-                        <button className="py-2 px-4 mt-4 basis-0 grow border border-blue-600 cursor-pointer bg-white rounded-2xl text-blue-600 font-semibold hover:scale-105 active:scale-95 transition-all duration-300 ease-in-out">Tolak</button>
-                      </div>                      
+                      <VerifikasiButton
+                        pembayaranId={pembayaran._id.toString()}
+                        currentData={pembayaran}
+                        tagihanId={Object(pembayaran.tagihan_id)._id}
+                        kamarId={Object(pembayaran.tagihan_id).kamar_id}
+                      />                   
                     </li>
                   )
                 })}

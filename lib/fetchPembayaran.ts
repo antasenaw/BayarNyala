@@ -103,3 +103,43 @@ export async function postPembayaran(detailPembayaran: detailPembayaran): Promis
         return { success: false, Message: `Kesalahan Jaringan: ${errorMessage}` };
     }
 }
+
+export async function editPembayaran(pembayaranId: string, updateData): Promise<APIResponse> {
+    const endpoint = `/api/pembayaran/${pembayaranId}`;
+    
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL; 
+    const fullUrl = `${baseUrl}${endpoint}`; 
+
+    try {
+        const response = await fetch(fullUrl, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updateData), 
+        });
+
+        const result = await response.json(); 
+
+        if (!response.ok) {
+            console.error(`API Error: Status ${response.status}`, result.error);
+            
+            const errorMessage = result.error || `Gagal memperbarui (${response.status}) - Cek input Anda.`;
+            
+            return { 
+                success: false, 
+                Message: errorMessage, 
+                error: result.error 
+            };
+        }
+        
+        return { 
+            success: true, 
+            Message: result.message || 'Data kamar berhasil diperbarui.',
+            data: result.data
+        };
+
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : "Kesalahan koneksi atau server tidak merespon.";
+        console.error("Network error during API call:", error);
+        return { success: false, Message: `Kesalahan Jaringan: ${errorMessage}` };
+    }
+}
