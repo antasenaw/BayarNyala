@@ -33,6 +33,8 @@ export async function bayar(formData: FormData) {
     if (formData.get('metode_pembayaran') === 'true') return 'Transfer';
     return 'Cash';
   }
+  const verified_by = formData.get('verified_by') as string;
+  console.log(verified_by)
   
   const detailPembayaranCash = {
     tagihan_id: tagihan_id,
@@ -40,6 +42,7 @@ export async function bayar(formData: FormData) {
     jumlah_bayar: jumlah_bayar,
     metode_pembayaran: metode_pembayaran(),
     status_verifikasi: false,
+    verified_by: verified_by
   }
   
   async function detailPembayaran() {

@@ -2,6 +2,7 @@ import LogoutButton from "@/components/admin/LogoutButton"
 import Navbar from "@/components/penyewa/Navbar";
 import { TagihanForm } from "@/components/penyewa/tagihan/TagihanForm";
 import { getTagihan } from "@/lib/fetchTagihan";
+import { getUserById } from "@/lib/fetchUser";
 import { getUserName } from "@/lib/getUser"
 import { formatToRupiah } from "@/utils/formatToRupiah";
 import { isoDateConvert } from "@/utils/isoDateConvert";
@@ -27,12 +28,16 @@ const page = async () => {
             </div>
             <ul className="flex-1 overflow-y-auto mt-4 border border-gray-400 rounded-2xl p-4">
               <div className=" grid grid-cols-4 gap-4">
-                {tagihanList.map(tagihan => {
-                  // console.log(tagihan)
+                {tagihanList.map(async tagihan => {
+                  console.log(tagihan)
+                  const pemilikKamar = await getUserById(Object(tagihan.kamar_id).managed_by);
                   return (
                     <li key={String(tagihan._id)} className="border shadow-lg transition-all duration-300 ease-in-out border-gray-400 self-start rounded-2xl p-4 flex flex-col">
                       <div className="flex justify-between items-center border-b border-gray-400 pb-4">
-                        <h3 className="font-bold text-2xl">Tagihan: Kamar {Object(tagihan.kamar_id).nomor_unit}</h3>
+                        <div>
+                          <h3 className="font-bold text-2xl">Tagihan: Kamar {Object(tagihan.kamar_id).nomor_unit}</h3>
+                          <h4 className="text-gray-400">Pemilik kamar: <span className="text-gray-500 font-semibold">{pemilikKamar.user?.nama}</span></h4>
+                        </div>
                         {
                           tagihan.status_pembayaran === 'Lunas' ?
                           <p className="py-2 px-4 bg-green-100 rounded-2xl text-green-500 font-semibold border border-green-300">{tagihan.status_pembayaran}</p> :
@@ -47,6 +52,7 @@ const page = async () => {
                         tagihan_id={String(tagihan._id)}
                         payer_id={String(tagihan.penyewa_id._id)}
                         jumlah_bayar={tagihan.jumlah_tagihan}
+                        verified_by={Object(tagihan.kamar_id).managed_by}
                       />
                     </li>
                   )

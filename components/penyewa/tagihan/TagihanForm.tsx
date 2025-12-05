@@ -6,13 +6,15 @@ export function TagihanForm ({
   tagihan_id,
   payer_id,
   jumlah_bayar,
+  verified_by
 } : {
   tagihan_id: string;
   payer_id: string;
   jumlah_bayar: number;
+  verified_by: string;
 }) {
   const [formIsVisible, setFormIsVisible] = useState(false);
-  const overlayRef = useRef<HTMLDivElement | null>(null);;
+  const overlayRef = useRef<HTMLDivElement | null>(null);
   const [paymentMethod, setPaymentMethod] = useState('transfer');
   return (
     <>
@@ -102,6 +104,8 @@ export function TagihanForm ({
                   <input className="absolute" type="hidden" name="payer_id" id="payer_id" hidden readOnly value={payer_id} />
                   <label className="absolute" htmlFor="jumlah_bayar"></label>
                   <input className="absolute" type="hidden" name="jumlah_bayar" id="jumlah_bayar" hidden readOnly value={jumlah_bayar} />
+                  <label className="absolute" htmlFor="verified_by"></label>
+                  <input className="absolute" type="hidden" name="verified_by" id="verified_by" hidden readOnly value={verified_by} />
                   <button className="hover:scale-102 active:scale-100 transition-all duration-300 ease-in-out bg-blue-600 text-white border-gray-400 font-semibold p-3 mt-4 border cursor-pointer shadow-lg  rounded-2xl">Bayar</button>
                 </fieldset>
               </div>

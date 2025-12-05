@@ -3,24 +3,29 @@ import connectDB from '@/lib/mongodb';
 import RiwayatPembayaran from '@/models/RiwayatPembayaran';
 import '@/models/User';
 import '@/models/Tagihan';
+import { getUserIdFromSession } from '@/lib/getUser';
 
 // GET - Get all riwayat pembayaran
-export async function GET(request: Request) {
+export async function GET(/*request: Request*/) {
   try {
     await connectDB();
 
-    const { searchParams } = new URL(request.url);
-    const tagihan_id = searchParams.get('tagihan_id');
-    const payer_id = searchParams.get('payer_id');
-    const status_verifikasi = searchParams.get('status_verifikasi');
-    const metode_pembayaran = searchParams.get('metode_pembayaran');
+    const user_id = await getUserIdFromSession();
 
-    // Build query filter
-    const filter: Record<string, unknown> = {};
-    if (tagihan_id) filter.tagihan_id = tagihan_id;
-    if (payer_id) filter.payer_id = payer_id;
-    if (status_verifikasi !== null) filter.status_verifikasi = status_verifikasi === 'true';
-    if (metode_pembayaran) filter.metode_pembayaran = metode_pembayaran;
+    const filter = { verified_by: user_id };
+
+    // const { searchParams } = new URL(request.url);
+    // const tagihan_id = searchParams.get('tagihan_id');
+    // const payer_id = searchParams.get('payer_id');
+    // const status_verifikasi = searchParams.get('status_verifikasi');
+    // const metode_pembayaran = searchParams.get('metode_pembayaran');
+
+    // // Build query filter
+    // const filter: Record<string, unknown> = {};
+    // if (tagihan_id) filter.tagihan_id = tagihan_id;
+    // if (payer_id) filter.payer_id = payer_id;
+    // if (status_verifikasi !== null) filter.status_verifikasi = status_verifikasi === 'true';
+    // if (metode_pembayaran) filter.metode_pembayaran = metode_pembayaran;
 
     const pembayaranList = await RiwayatPembayaran.find(filter)
       .populate('tagihan_id')
@@ -53,7 +58,8 @@ export async function POST(request: Request) {
       payer_id, 
       jumlah_bayar, 
       metode_pembayaran, 
-      bukti_transfer_path
+      bukti_transfer_path,
+      verified_by
     } = body;
 
     // Validasi input
@@ -88,10 +94,12 @@ export async function POST(request: Request) {
       metode_pembayaran,
       bukti_transfer_path: bukti_transfer_path || undefined,
       status_verifikasi: false,
+      verified_by
     });
 
     await pembayaran.populate('tagihan_id');
     await pembayaran.populate('payer_id', 'nama email');
+    await pembayaran.populate('verified_by', 'nama email')
 
     return NextResponse.json({
       success: true,

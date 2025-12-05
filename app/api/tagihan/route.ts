@@ -27,7 +27,7 @@ export async function GET(/*request: Request*/) {
 
     const tagihanList = await Tagihan.find(filter)
       .populate('penyewa_id', 'nama email')
-      .populate('kamar_id', 'nomor_unit harga_sewa')
+      .populate('kamar_id', 'nomor_unit harga_sewa managed_by')
       .sort({ bulan_tahun: -1 });
 
     return NextResponse.json({
