@@ -102,3 +102,90 @@ export async function postSewa(detailSewa: detailSewa): Promise<APIResponse> {
         return { success: false, Message: `Kesalahan Jaringan: ${errorMessage}` };
     }
 }
+
+export async function editSewa(sewaId: string, updateData: unknown): Promise<APIResponse> {
+    const endpoint = `/api/sewa/${sewaId}`;
+    
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL; 
+    const fullUrl = `${baseUrl}${endpoint}`; 
+
+    try {
+        const response = await fetch(fullUrl, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updateData), 
+        });
+
+        const result = await response.json(); 
+
+        if (!response.ok) {
+            console.error(`API Error: Status ${response.status}`, result.error);
+            
+            const errorMessage = result.error || `Gagal memperbarui (${response.status}) - Cek input Anda.`;
+            
+            return { 
+                success: false, 
+                Message: errorMessage, 
+                error: result.error 
+            };
+        }
+        
+        return { 
+            success: true, 
+            Message: result.message || 'Data kamar berhasil diperbarui.',
+            data: result.data
+        };
+
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : "Kesalahan koneksi atau server tidak merespon.";
+        console.error("Network error during API call:", error);
+        return { success: false, Message: `Kesalahan Jaringan: ${errorMessage}` };
+    }
+}
+
+export async function getSewaById(sewaId: string): Promise<APIResponse> {
+    
+    if (!sewaId || typeof sewaId !== 'string') {
+        return { 
+            success: false, 
+            Message: 'ID Kamar tidak valid.', 
+            error: 'Invalid ID provided' 
+        };
+    }
+    
+    const endpoint = `/api/sewa/${sewaId}`;
+    
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL; 
+    const fullUrl = `${baseUrl}${endpoint}`; 
+
+    try {
+        const response = await fetch(fullUrl, {
+            method: 'GET',
+        });
+
+        const result = await response.json(); 
+
+        if (!response.ok) {
+            console.error(`API Error: Status ${response.status}`, result.error);
+            
+            const errorMessage = result.error || `Gagal mengambil data kamar (${response.status}).`;
+            
+            return { 
+                success: false, 
+                Message: errorMessage, 
+                error: result.error 
+            };
+        }
+        
+        return { 
+            success: true, 
+            data: result.data,
+            Message: 'Data berhasil dimuat.'
+        };
+
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : "Kesalahan koneksi atau server tidak merespon.";
+        console.error(`Network error during API single item call for ID ${sewaId}:`, error);
+        return { success: false, Message: `Kesalahan Jaringan: ${errorMessage}` };
+    }
+}

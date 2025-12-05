@@ -105,7 +105,7 @@ export async function postTagihan(detailTagihan: detailTagihan): Promise<APIResp
     }
 }
 
-export async function editTagihan(tagihanId: string, updateData): Promise<APIResponse> {
+export async function editTagihan(tagihanId: string, updateData: unknown): Promise<APIResponse> {
     const endpoint = `/api/tagihan/${tagihanId}`;
     
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL; 

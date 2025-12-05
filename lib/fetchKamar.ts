@@ -128,7 +128,7 @@ export async function deleteKamar(kamarId: string): Promise<APIResponse> {
     }
 }
 
-export async function editKamar(kamarId: string, updateData: IKamarInput): Promise<APIResponse> {
+export async function editKamar(kamarId: string, updateData: unknown): Promise<APIResponse> {
     const endpoint = `/api/kamar/${kamarId}`;
     
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL; 

@@ -19,7 +19,7 @@ export interface IKamar extends Document {
 }
 
 export interface IKamarInput {
-  nomor_unit: string;
+  nomor_unit: string | undefined;
   harga_sewa: number;
   status_ketersediaan: boolean;
   managed_by: string;

@@ -104,7 +104,7 @@ export async function postPembayaran(detailPembayaran: detailPembayaran): Promis
     }
 }
 
-export async function editPembayaran(pembayaranId: string, updateData): Promise<APIResponse> {
+export async function editPembayaran(pembayaranId: string, updateData: unknown): Promise<APIResponse> {
     const endpoint = `/api/pembayaran/${pembayaranId}`;
     
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL; 

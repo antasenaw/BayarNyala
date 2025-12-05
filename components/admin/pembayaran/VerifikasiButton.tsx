@@ -7,7 +7,7 @@ const VerifikasiButton = ({
   pembayaranId,
   currentData,
   tagihanId,
-  kamarId
+  kamarId,
 } : { 
   pembayaranId: string, 
   currentData: IRiwayatPembayaran 
