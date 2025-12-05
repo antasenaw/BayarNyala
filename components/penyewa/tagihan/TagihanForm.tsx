@@ -1,7 +1,16 @@
 "use client"
+import { bayar } from "@/actions/bayar";
 import { useRef, useState } from "react";
 
-export function TagihanForm () {
+export function TagihanForm ({
+  tagihan_id,
+  payer_id,
+  jumlah_bayar,
+} : {
+  tagihan_id: string;
+  payer_id: string;
+  jumlah_bayar: number;
+}) {
   const [formIsVisible, setFormIsVisible] = useState(false);
   const overlayRef = useRef<HTMLDivElement | null>(null);;
   const [paymentMethod, setPaymentMethod] = useState('transfer');
@@ -15,7 +24,7 @@ export function TagihanForm () {
               memek
             </div>
             :
-            <form action="">
+            <form action={bayar}>
               <div className="bg-white text-gray-700 p-6 rounded-2xl min-w-xl max-w-xl shadow-2xl border border-gray-300">
                 <div className="flex justify-between items-center">
                   <div>
@@ -52,42 +61,49 @@ export function TagihanForm () {
                       <label htmlFor="metode_pembayaran" className="text-gray-400">Cash</label>
                     </div>
                   </div>
+                  {paymentMethod === 'transfer' && (
+                    <div className="flex flex-col gap-4 p-4 border border-blue-400 rounded-2xl bg-blue-50 shadow-inner">
+                      <h4 className="font-bold text-blue-600 text-lg">Langkah Pembayaran Transfer</h4>
+                      <div className=" text-gray-600 space-y-2">
+                          <p>Silakan lakukan transfer ke detail rekening berikut:</p>
+                          <div className="font-mono bg-white p-3 rounded-2xl border border-gray-400 text-sm">
+                              <span className="font-bold">BANK BCA:</span> 123-456-7890<br/>
+                              <span className="font-bold">A.N.:</span> PT. KOSMAYA INDONESIA
+                          </div>
+                      </div>
+                      
+                      {/* Input Bukti Transfer */}
+                      <div className="flex flex-col gap-2">
+                          <label htmlFor="bukti_transfer" className="text-gray-600 font-medium">Unggah Bukti Transfer <span className="text-red-500">*</span></label>
+                          <input 
+                              type="file" 
+                              id="bukti_transfer"
+                              name="bukti_transfer"
+                              className="p-2  text-gray-400 border border-gray-400 rounded-2xl cursor-pointer bg-white file:mr-4 file:py-2 file:px-4 file:rounded-2xl file:border file:border-blue-400 file:text-sm file:font-semibold file:bg-white file:text-blue-400"
+                              required
+                          />
+                      </div>
+                    </div>
+                  )}
+                  {paymentMethod === 'cash' && (
+                    <div className="flex flex-col gap-3 p-4 border border-green-400 rounded-xl bg-green-50 shadow-inner">
+                      <h4 className="font-bold text-green-600 text-lg">Instruksi Pembayaran Tunai</h4>
+                      <p className=" text-gray-700">
+                          Pembayaran cash/tunai harus diserahkan langsung kepada pemilik kos di lokasi.
+                      </p>
+                      <p className=" font-medium text-gray-700">
+                          Pastikan Anda menghubungi pemilik kos ini terlebih dahulu untuk melakukan pembayaran secara cash/tunai.
+                      </p>
+                    </div>
+                  )}
+                  <label className="absolute" htmlFor="tagihan_id"></label>
+                  <input className="absolute" type="hidden" name="tagihan_id" id="tagihan_id" hidden readOnly value={tagihan_id} />
+                  <label className="absolute" htmlFor="payer_id"></label>
+                  <input className="absolute" type="hidden" name="payer_id" id="payer_id" hidden readOnly value={payer_id} />
+                  <label className="absolute" htmlFor="jumlah_bayar"></label>
+                  <input className="absolute" type="hidden" name="jumlah_bayar" id="jumlah_bayar" hidden readOnly value={jumlah_bayar} />
+                  <button className="hover:scale-102 active:scale-100 transition-all duration-300 ease-in-out bg-blue-600 text-white border-gray-400 font-semibold p-3 mt-4 border cursor-pointer shadow-lg  rounded-2xl">Bayar</button>
                 </fieldset>
-                {paymentMethod === 'transfer' && (
-                  <div className="flex flex-col gap-4 p-4 border border-blue-400 rounded-2xl bg-blue-50 shadow-inner">
-                    <h4 className="font-bold text-blue-600 text-lg">Langkah Pembayaran Transfer</h4>
-                    <div className=" text-gray-600 space-y-2">
-                        <p>Silakan lakukan transfer ke detail rekening berikut:</p>
-                        <div className="font-mono bg-white p-3 rounded-2xl border border-gray-400 text-sm">
-                            <span className="font-bold">BANK BCA:</span> 123-456-7890<br/>
-                            <span className="font-bold">A.N.:</span> PT. KOSMAYA INDONESIA
-                        </div>
-                    </div>
-                    
-                    {/* Input Bukti Transfer */}
-                    <div className="flex flex-col gap-2">
-                        <label htmlFor="bukti_transfer" className="text-gray-600 font-medium">Unggah Bukti Transfer <span className="text-red-500">*</span></label>
-                        <input 
-                            type="file" 
-                            id="bukti_transfer"
-                            name="bukti_transfer"
-                            className="p-2  text-gray-400 border border-gray-400 rounded-2xl cursor-pointer bg-white file:mr-4 file:py-2 file:px-4 file:rounded-2xl file:border file:border-blue-400 file:text-sm file:font-semibold file:bg-white file:text-blue-400"
-                            required
-                        />
-                    </div>
-                  </div>
-                )}
-                {paymentMethod === 'cash' && (
-                  <div className="flex flex-col gap-3 p-4 border border-green-400 rounded-xl bg-green-50 shadow-inner">
-                    <h4 className="font-bold text-green-600 text-lg">Instruksi Pembayaran Tunai</h4>
-                    <p className="text-sm text-gray-700">
-                        Pembayaran tunai harus diserahkan langsung kepada **Manajer/Petugas Unit** di lokasi.
-                    </p>
-                    <p className="text-sm font-medium text-gray-700">
-                        Pastikan Anda menerima **tanda terima resmi** setelah pembayaran dilakukan.
-                    </p>
-                  </div>
-                )}
               </div>
             </form>
           }

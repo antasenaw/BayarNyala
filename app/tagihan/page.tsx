@@ -28,6 +28,7 @@ const page = async () => {
             <ul className="flex-1 overflow-y-auto mt-4 border border-gray-400 rounded-2xl p-4">
               <div className=" grid grid-cols-4 gap-4">
                 {tagihanList.map(tagihan => {
+                  // console.log(tagihan)
                   return (
                     <li key={String(tagihan._id)} className="border shadow-lg transition-all duration-300 ease-in-out border-gray-400 self-start rounded-2xl p-4 flex flex-col">
                       <div className="flex justify-between items-center border-b border-gray-400 pb-4">
@@ -42,7 +43,11 @@ const page = async () => {
                       <p className="font-bold text-blue-600 text-4xl">{formatToRupiah(tagihan.jumlah_tagihan)}</p>
                       <p className="mt-4 text-gray-400">Tenggat pembayaran :</p>
                       <p className="font-semibold text-red-500">{isoDateConvert(tagihan.tenggat_bayar)}</p>
-                      <TagihanForm />
+                      <TagihanForm
+                        tagihan_id={String(tagihan._id)}
+                        payer_id={String(tagihan.penyewa_id._id)}
+                        jumlah_bayar={tagihan.jumlah_tagihan}
+                      />
                     </li>
                   )
                 })}

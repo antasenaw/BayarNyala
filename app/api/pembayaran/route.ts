@@ -53,8 +53,7 @@ export async function POST(request: Request) {
       payer_id, 
       jumlah_bayar, 
       metode_pembayaran, 
-      bukti_transfer_path,
-      tanggal_bayar 
+      bukti_transfer_path
     } = body;
 
     // Validasi input
@@ -86,7 +85,6 @@ export async function POST(request: Request) {
       tagihan_id,
       payer_id,
       jumlah_bayar,
-      tanggal_bayar: tanggal_bayar ? new Date(tanggal_bayar) : new Date(),
       metode_pembayaran,
       bukti_transfer_path: bukti_transfer_path || undefined,
       status_verifikasi: false,

@@ -4,7 +4,6 @@ export interface IRiwayatPembayaran extends Document {
   tagihan_id: mongoose.Types.ObjectId;
   payer_id: mongoose.Types.ObjectId;
   jumlah_bayar: number;
-  tanggal_bayar: Date;
   metode_pembayaran: 'Cash' | 'Transfer';
   status_verifikasi: boolean;
   verified_by?: mongoose.Types.ObjectId;
@@ -30,11 +29,6 @@ const RiwayatPembayaranSchema = new Schema<IRiwayatPembayaran>(
       type: Number,
       required: [true, 'Jumlah bayar wajib diisi'],
       min: [0, 'Jumlah bayar tidak boleh negatif'],
-    },
-    tanggal_bayar: {
-      type: Date,
-      default: Date.now,
-      required: true,
     },
     metode_pembayaran: {
       type: String,
