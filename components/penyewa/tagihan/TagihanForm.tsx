@@ -1,4 +1,5 @@
 "use client"
+import { batalSewa } from "@/actions/batalSewa";
 import { bayar } from "@/actions/bayar";
 import { useRef, useState } from "react";
 
@@ -6,19 +7,24 @@ export function TagihanForm ({
   tagihan_id,
   payer_id,
   jumlah_bayar,
-  verified_by
+  verified_by,
+  kamar_id
 } : {
   tagihan_id: string;
   payer_id: string;
   jumlah_bayar: number;
   verified_by: string;
+  kamar_id: string;
 }) {
   const [formIsVisible, setFormIsVisible] = useState(false);
+  const [displayBatalSewa, setDisplayBatalSewa] = useState(false);
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const [paymentMethod, setPaymentMethod] = useState('transfer');
+  
   return (
     <>
       <button onClick={() => setFormIsVisible(true)} className="mt-4 cursor-pointer py-2 px-4 bg-blue-600 font-semibold text-white rounded-2xl hover:scale-102 active:scale-98 transition-all duration-300 ease-in-out">Bayar tagihan</button>
+      <button onClick={() => setDisplayBatalSewa(true)} className="mt-4 cursor-pointer py-2 px-4 bg-white font-semibold text-blue-600 border border-blue-600 rounded-2xl hover:scale-102 active:scale-98 transition-all duration-300 ease-in-out">Batal sewa</button>
       {formIsVisible &&
         <div ref={overlayRef} className="backdrop-blur-xs absolute inset-0 flex justify-center items-center" onClick={e => {if (e.target === overlayRef.current) {setFormIsVisible(false); setPaymentMethod('transfer')}}}>
           {false ?
@@ -111,6 +117,23 @@ export function TagihanForm ({
               </div>
             </form>
           }
+        </div>
+      }
+      {displayBatalSewa && 
+        <div ref={overlayRef} className="backdrop-blur-xs absolute inset-0 flex justify-center items-center" onClick={e => {if (e.target === overlayRef.current) {setDisplayBatalSewa(false)}}}>
+          <section className="bg-white text-gray-700 p-6 rounded-2xl min-w-xl shadow-2xl border border-gray-300">
+          <h3 className="font-bold text-2xl">Apa anda yakin ingin membatalkan sewa ini?</h3>
+          <div className="flex items-center mt-6 gap-6">
+            <button onClick={() => {
+              setDisplayBatalSewa(false)
+            }} className="bg-blue-600 text-white grow basis-0 cursor-pointer hover:scale-105  active:scale-100 transition-all duration-300 ease-in-out border border-gray-400 rounded-2xl py-2 shadow-lg font-semibold text-lg">
+              Tidak
+            </button>
+            <button onClick={()=>batalSewa(payer_id, kamar_id)} className="basis-0 grow cursor-pointer hover:scale-105  active:scale-100 transition-all duration-300 ease-in-out border border-blue-600 text-blue-600 rounded-2xl py-2 shadow-lg font-semibold text-lg">
+              Ya
+            </button>
+          </div>
+      </section>
         </div>
       }
     </>

@@ -10,16 +10,15 @@ import Sewa from "@/models/Sewa";
 import { revalidatePath } from "next/cache";
 
 async function verifikasiSewa(tagihanPenyewaId: string) {
-    await connectDB();
-    const [ sewa ] = await Sewa.find({penyewa_id: tagihanPenyewaId});
-
+  await connectDB();
+  const [ sewa ] = await Sewa.find({penyewa_id: tagihanPenyewaId});
 
   const updatedSewaData = {
     ...sewa,
     status: 'aktif'
   };
-  const updatedSewa = (await editSewa(sewa._id, updatedSewaData)).data;
-  console.log(updatedSewa, 'memek')
+  await editSewa(sewa._id, updatedSewaData);
+  // console.log(updatedSewa, 'memek')
 }
 
 async function verifikasiKamar(kamarId: string) {
@@ -28,8 +27,8 @@ async function verifikasiKamar(kamarId: string) {
     ...kamar,
     status_ketersediaan: false
   }
-  const updatedKamar = (await editKamar(kamarId, updatedKamarData)).data;
-  console.log(updatedKamar)
+  await editKamar(kamarId, updatedKamarData);
+  // console.log(updatedKamar)
 }
 
 async function verifikasiTagihan(tagihanId: string) {

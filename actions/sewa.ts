@@ -25,7 +25,7 @@ function getTenggat(sewaCreatedAtDate: Date) {
   const newDate = new Date(startDate);
   const currentDay = newDate.getDate();
   
-  newDate.setDate(currentDay + 3);
+  newDate.setDate(currentDay + 1);
   
   return newDate;
 }
@@ -45,7 +45,7 @@ export async function sewa(prevState: unknown, formData: FormData) {
     alamat: String(formData.get('alamat')),
   };
   
-  const penyewa = await postPenyewaDetails(detailPenyewa);
+  await postPenyewaDetails(detailPenyewa);
   
   const detailSewa = {
     penyewa_id: detailPenyewa.user_id,
@@ -66,11 +66,11 @@ export async function sewa(prevState: unknown, formData: FormData) {
     status_pembayaran: 'Belum Lunas',
   }
   
-  const tagihan = await postTagihan(detailTagihan);
+  await postTagihan(detailTagihan);
 
-  console.log(penyewa.data, sewa.data, tagihan.data);
+  // console.log(penyewa.data, sewa.data, tagihan.data);
 
   return {
-    sucsess: false,
+    sucsess: true,
   };
 }

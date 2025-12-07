@@ -23,7 +23,7 @@ const Navbar = () => {
               <Link href={`/sewa-kamar`} className="flex gap-2 items-center">{kamar}Sewa kamar</Link>
             </li>
             <li className={`relative group flex py-2 px-4 rounded-2xl items-center gap-2 ${pathname === '/tagihan' ? 'text-white bg-blue-600' : 'bg-white text-blue-600'} hover:scale-105 active:scale-95 hover:text-white hover:bg-blue-600 transition-all ease-in-out duration-300`}>
-              <Link href={`/tagihan`} className="flex gap-2 items-center">{tagihan}Kelola Tagihan</Link>
+              <Link href={`/tagihan`} className="flex gap-2 items-center">{tagihan}Tagihan</Link>
             </li>
           </ul>
         </nav>

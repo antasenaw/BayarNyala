@@ -24,8 +24,8 @@ const page = async () => {
               <input type="text" className="border border-gray-400 bg-white p-2 px-4 rounded-2xl shadow-lg" placeholder="Cari kamar" />
             </div>
             <ul className="flex-1 overflow-y-auto mt-4 border border-gray-400 rounded-2xl p-4">
-              <div className=" grid grid-cols-3 gap-4">
-                {sewaList.map(async sewa => {
+              <div className={`${sewaList.length === 0 ? '' : 'grid grid-cols-3 gap-4'}`}>
+                {sewaList.length === 0 ? <p className="text-center text-gray-500">Belum ada penyewaan</p> : sewaList.map(async sewa => {
                   // console.log(Object(pembayaran.tagihan_id).kamar_id);
                   // const nomor_unit = await getKamarById(Object(pembayaran.tagihan_id).kamar_id)
                   // console.log(nomor_unit);

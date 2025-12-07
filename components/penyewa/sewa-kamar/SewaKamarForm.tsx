@@ -11,20 +11,9 @@ const SewaKamarForm = ({ nomor_unit, pemilik, penyewa_id, kamar_id }: { nomor_un
   return (
     <>
       <button onClick={() => setFormDisplay(!formDisplay)} className="mt-4 cursor-pointer bg-blue-600 py-2 px-4 rounded-2xl font-semibold text-white border border-gray-400 hover:scale-102 active:scale-98 transition-all duration-300 ease-in-out">Sewa</button>
-      {
-        formDisplay &&
-        <>
+      {formDisplay && !data &&
           <div ref={overlayRef} className="backdrop-blur-xs absolute inset-0 flex justify-center items-center" onClick={e => e.target === overlayRef.current && setFormDisplay(!formDisplay)}>
-          { data && data.sucsess ?
-            <div className="bg-white text-gray-700 p-6 rounded-2xl min-w-xl shadow-2xl border border-gray-300">
-              <div className="flex justify-between items-center">
-                <div>
-                  <h3 className="font-bold text-2xl">Berhasil</h3>
-                </div>
-                  <button onClick={() => setFormDisplay(!formDisplay)} className="hover:scale-105 active:scale-100 transition-all duration-300 ease-in-out text-white bg-blue-600 p-2 px-4 rounded-2xl font-semibold border border-gray-400 shadow-lg cursor-pointer">Tutup</button>
-              </div>
-            </div>
-            :
+          
             <form action={action} className="bg-white text-gray-700 p-6 rounded-2xl min-w-xl shadow-2xl border border-gray-300">
               <div className="flex justify-between items-center">
                 <div>
@@ -92,10 +81,9 @@ const SewaKamarForm = ({ nomor_unit, pemilik, penyewa_id, kamar_id }: { nomor_un
                 </button>
               </fieldset>
             </form>
-          }
           </div>
-        </>
       }
+
     </>
   );
 };

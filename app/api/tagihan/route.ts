@@ -3,7 +3,7 @@ import connectDB from '@/lib/mongodb';
 import Tagihan from '@/models/Tagihan';
 import '@/models/User';
 import '@/models/Kamar';
-import { getUserIdFromSession } from '@/lib/getUser';
+import { getUserIdFromSession, getUserRole } from '@/lib/getUser';
 
 // GET - Get all tagihan
 export async function GET(/*request: Request*/) {
@@ -11,8 +11,16 @@ export async function GET(/*request: Request*/) {
     await connectDB();
 
     const user_id = await getUserIdFromSession();
+    const user_role = await getUserRole();
+    console.log(user_id, user_role)
 
-    const filter = {penyewa_id: user_id}
+    const filter = async () => {
+      if (user_role === 'Admin') {
+        return {};
+      } else {
+        return {penyewa_id: user_id}
+      };
+    }
 
     // const { searchParams } = new URL(request.url);
     // const penyewa_id = searchParams.get('penyewa_id');
@@ -25,15 +33,23 @@ export async function GET(/*request: Request*/) {
     // if (kamar_id) filter.kamar_id = kamar_id;
     // if (status_pembayaran) filter.status_pembayaran = status_pembayaran;
 
-    const tagihanList = await Tagihan.find(filter)
+    const tagihanListUnfiltered = await Tagihan.find(await filter())
       .populate('penyewa_id', 'nama email')
       .populate('kamar_id', 'nomor_unit harga_sewa managed_by')
       .sort({ bulan_tahun: -1 });
 
+      let tagihanList;
+
+      if (user_role === 'Admin') { 
+        tagihanList = await tagihanListUnfiltered.filter(t => Object(t.kamar_id).managed_by.toString() === user_id)
+      } else {
+        tagihanList =  await tagihanListUnfiltered;
+      }
+
     return NextResponse.json({
       success: true,
       count: tagihanList.length,
-      data: tagihanList,
+      data: tagihanList
     });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';

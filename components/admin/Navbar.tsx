@@ -19,19 +19,19 @@ const Navbar = ({admin}:{admin?:boolean}) => {
           <ul className="flex gap-4 font-semibold">
             <li className={`relative group flex py-2 px-4 rounded-2xl items-center gap-2 ${pathname === '/admin/dashboard' ? 'text-white bg-blue-600' : 'bg-white text-blue-600'} hover:scale-105 active:scale-95 hover:text-white hover:bg-blue-600 transition-all ease-in-out duration-300`}>
               {/* <div className={`${pathname === '/admin/dashboard' || 'opacity-0 top-100 bottom-100' } top-2 bottom-2 group-hover:opacity-100 group-hover:top-2 group-hover:bottom-2 absolute bg-blue-600 inset-0 right-51 rounded-2xl transition-all ease-in-out duration-400`}/> */}
-              <Link href={`${admin ? 'admin' : '.'}/dashboard`} className="flex gap-2 items-center">{home}Dashboard</Link>
+              <Link href={`${admin ? 'admin' : pathname === '/admin/pembayaran/tagihan' ? '..' : '.'}/dashboard`} className="flex gap-2 items-center">{home}Dashboard</Link>
             </li>
             <li className={`relative group flex py-2 px-4 rounded-2xl items-center gap-2 ${pathname === '/admin/kamar' ? 'text-white bg-blue-600' : 'bg-white text-blue-600'} hover:scale-105 active:scale-95 hover:text-white hover:bg-blue-600 transition-all ease-in-out duration-300`}>
               {/* <div className={`${pathname === '/admin/kamar' || 'opacity-0 top-100 bottom-100' } top-2 bottom-2 group-hover:opacity-100 group-hover:top-2 group-hover:bottom-2 absolute bg-blue-600 inset-0 right-51 rounded-2xl transition-all ease-in-out duration-400`}/> */}
-              <Link href={`${admin ? 'admin' : '.'}/kamar`} className="flex gap-2 items-center">{kamar}Kelola kamar</Link>
+              <Link href={`${admin ? 'admin' : pathname === '/admin/pembayaran/tagihan' ? '..' : '.'}/kamar`} className="flex gap-2 items-center">{kamar}Kelola kamar</Link>
             </li>
             <li className={`relative group flex py-2 px-4 rounded-2xl items-center gap-2 ${pathname === '/admin/penyewa' ? 'text-white bg-blue-600' : 'bg-white text-blue-600'} hover:scale-105 active:scale-95 hover:text-white hover:bg-blue-600 transition-all ease-in-out duration-300`}>
               {/* <div className={`${pathname === '/admin/penyewa' || 'opacity-0 top-100 bottom-100' } top-2 bottom-2 group-hover:opacity-100 group-hover:top-2 group-hover:bottom-2 absolute bg-blue-600 inset-0 right-51 rounded-2xl transition-all ease-in-out duration-400`}/> */}
-              <Link href={`${admin ?'admin' : '.'}/penyewa`} className="flex gap-2 items-center">{penyewa}Kelola penyewa</Link>
+              <Link href={`${admin ?'admin' : pathname === '/admin/pembayaran/tagihan' ? '..' : '.'}/penyewa`} className="flex gap-2 items-center">{penyewa}Penyewaan</Link>
             </li>
-            <li className={`relative group flex py-2 px-4 rounded-2xl items-center gap-2 ${pathname === '/admin/pembayaran' ? 'text-white bg-blue-600' : 'bg-white text-blue-600'} hover:scale-105 active:scale-95 hover:text-white hover:bg-blue-600 transition-all ease-in-out duration-300`}>
+            <li className={`relative group flex py-2 px-4 rounded-2xl items-center gap-2 ${pathname === '/admin/pembayaran' || pathname === '/admin/pembayaran/tagihan' ? 'text-white bg-blue-600' : 'bg-white text-blue-600'} hover:scale-105 active:scale-95 hover:text-white hover:bg-blue-600 transition-all ease-in-out duration-300`}>
               {/* <div className={`${pathname === '/admin/pembayaran' || 'opacity-0 top-100 bottom-100' } top-2 bottom-2 group-hover:opacity-100 group-hover:top-2 group-hover:bottom-2 absolute bg-blue-600 inset-0 right-51 rounded-2xl transition-all ease-in-out duration-400`}/> */}
-              <Link href={`${admin ? 'admin' : '.'}/pembayaran`} className="flex gap-2 items-center">{pembayaran}Kelola pembayaran</Link>
+              <Link href={`${admin ? 'admin' : pathname === '/admin/pembayaran/tagihan' ? '..' : '.'}/pembayaran`} className="flex gap-2 items-center">{pembayaran}Pembayaran</Link>
             </li>
           </ul>
         </nav>

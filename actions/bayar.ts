@@ -34,7 +34,7 @@ export async function bayar(formData: FormData) {
     return 'Cash';
   }
   const verified_by = formData.get('verified_by') as string;
-  console.log(verified_by)
+  // console.log(verified_by)
   
   const detailPembayaranCash = {
     tagihan_id: tagihan_id,
@@ -53,8 +53,8 @@ export async function bayar(formData: FormData) {
     return detailPembayaranCash;
   }
 
-  const pembayaran = await postPembayaran(await detailPembayaran());
+  await postPembayaran(await detailPembayaran());
   
-  console.log(pembayaran.data);
+  // console.log(pembayaran.data);
 
 }

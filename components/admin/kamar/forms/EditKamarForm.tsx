@@ -94,7 +94,7 @@ const EditKamarForm = ({
               defaultValue={data?.harga_sewa}
             />
           </div>
-          <div className="flex flex-col gap-2">
+          {/* <div className="flex flex-col gap-2">
             <label className="text-gray-500">Tersedia sekarang</label>
             <div className="flex items-center gap-2">
               <label htmlFor="status_ketersediaan" className="text-gray-500">Ya</label>
@@ -120,7 +120,7 @@ const EditKamarForm = ({
                 defaultChecked={!data?.status_ketersediaan}
               />
             </div>
-          </div>
+          </div> */}
           <button
             type="submit"
             className="hover:scale-102 active:scale-100 transition-all duration-300 ease-in-out bg-blue-600 text-white font-semibold p-3 mt-4 border cursor-pointer shadow-lg border-gray-400 rounded-2xl"

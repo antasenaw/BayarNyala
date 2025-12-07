@@ -17,8 +17,8 @@ const KamarList = ({
 }) => {
   return (
     <ul className="flex-1 overflow-y-auto mt-4 border border-gray-400 rounded-2xl p-4">
-      <div className=" grid grid-cols-4 gap-4">
-        {kamarList.map(kamar => {
+      <div className={`${kamarList.length === 0 ? '' : 'grid grid-cols-4 gap-4'}`}>
+        {kamarList.length === 0 ? <p className="text-center text-gray-500">Anda belum menambahkan kamar</p> : kamarList.map(kamar => {
           return (
             <li key={String(kamar._id)} className="border h-full shadow-lg transition-all duration-300 ease-in-out border-gray-400 self-start rounded-2xl p-4 flex flex-col">
               <div className="flex justify-between items-center border-b border-gray-400 pb-4">
