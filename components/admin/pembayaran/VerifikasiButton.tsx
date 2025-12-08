@@ -2,6 +2,8 @@
 
 import { verifikasi } from "@/actions/verifikasi"
 import { IRiwayatPembayaran } from "@/models/RiwayatPembayaran"
+import { useState } from "react"
+import { SpinnerSVG } from "../Navbar"
 
 const VerifikasiButton = ({
   pembayaranId,
@@ -14,15 +16,17 @@ const VerifikasiButton = ({
   tagihanId: string,
   kamarId: string
 }) => {
+  const [loading, setLoading] = useState('');
 
   return (
     <div className="flex gap-4 items-center">
       <button
-        className="py-2 px-4 mt-4 basis-0 grow border border-gray-400 cursor-pointer bg-blue-600 rounded-2xl text-white font-semibold hover:scale-105 active:scale-95 transition-all duration-300 ease-in-out"
+        className="py-2 px-4 mt-4 flex items-center justify-center gap-2 basis-0 grow border border-gray-400 cursor-pointer bg-blue-600 rounded-2xl text-white font-semibold hover:scale-105 active:scale-95 transition-all duration-300 ease-in-out"
         onClick={() => {
+          setLoading('loading1');;
           verifikasi(pembayaranId, currentData, tagihanId, kamarId);
         }}
-      >Verifikasi</button>
+      >{loading === 'loading1' ? <>Memverifikasi {SpinnerSVG}</> : <>Verifikasi</>}</button>
       <button className="py-2 px-4 mt-4 basis-0 grow border border-blue-600 cursor-pointer bg-white rounded-2xl text-blue-600 font-semibold hover:scale-105 active:scale-95 transition-all duration-300 ease-in-out">Tolak</button>
     </div>   
   )

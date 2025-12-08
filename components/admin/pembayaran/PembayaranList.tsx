@@ -19,7 +19,7 @@ const PembayaranList = async () => {
         const nomor_unit = await getKamarById(Object(pembayaran.tagihan_id).kamar_id)
         // console.log(nomor_unit);
         return (
-          <li key={String(pembayaran._id)} className="border shadow-lg transition-all duration-300 ease-in-out border-gray-400 self-start rounded-2xl p-4 flex flex-col">
+          <li key={String(pembayaran._id)} className="border shadow-lg h-full transition-all duration-300 ease-in-out border-gray-400 self-start rounded-2xl p-4 flex flex-col">
             <div className="flex justify-between items-center border-b border-gray-400 pb-4">
               <div>
                 <h3 className="font-bold text-2xl">Pembayaran: Kamar {nomor_unit.data?.nomor_unit}</h3>
@@ -34,7 +34,7 @@ const PembayaranList = async () => {
             <p className="mt-4 text-gray-400">Jumlah dibayar :</p>
             <p className="font-bold text-blue-600 text-4xl">{formatToRupiah(pembayaran.jumlah_bayar)}</p>
             <p className="mt-4 text-gray-400">Tanggal dibayar :</p>
-            <p className="font-semibold text-gray-500">{isoDateConvert(pembayaran.created_at)}</p>
+            <p className="font-semibold text-blue-500">{isoDateConvert(pembayaran.created_at)}</p>
             <p className="mt-4 text-gray-400">Metode pembayaran :</p>
             <div className="flex items-center gap-2">
               <p className="font-semibold flex items-center gap-2 text-gray-500">{pembayaran.metode_pembayaran}</p>

@@ -1,6 +1,7 @@
 "use client"
 
 import { signup } from "@/actions/signup"
+import { SpinnerSVG } from "@/components/admin/Navbar"
 import Link from "next/link"
 import { useActionState } from "react"
 
@@ -9,7 +10,7 @@ const Page = () => {
 
   return (
     <main className="flex items-center justify-center h-full w-full bg-white">
-      <section className="bg-white text-black p-6 rounded-2xl min-w-xl shadow-2xl border border-gray-300">
+      <section className="bg-white text-black p-6 rounded-2xl min-w-xl shadow-2xl border border-gray-300 max-md:max-w-screen max-md:min-w-screen">
         <div className="flex justify-between items-center">
           <h1 className="font-bold text-2xl">Daftar</h1>
           <Link href='/login' className="text-blue-600 hover:underline">Saya sudah memiliki akun</Link>
@@ -79,7 +80,7 @@ const Page = () => {
             />
             <label htmlFor="role">Pemilik kos</label>
           </div>
-          <button type="submit" disabled={pending} className={`${pending ? 'bg-white text-blue-600 border-blue-600' : 'bg-blue-600 text-white border-gray-400'} border font-semibold p-3 mt-4 cursor-pointer shadow-xl rounded-2xl hover:scale-102 active:scale-98 transition-all duration-300 ease-in-out`}>{pending ? 'Loading...' : 'Daftar'}</button>
+          <button type="submit" disabled={pending} className={`${pending ? 'bg-white text-blue-600 border-blue-600' : 'bg-blue-600 text-white border-gray-400'} border font-semibold p-3 mt-4 cursor-pointer shadow-xl rounded-2xl hover:scale-102 active:scale-98 transition-all duration-300 ease-in-out flex items-center gap-2 justify-center`}>{pending ? <>Loading{SpinnerSVG}</> : 'Daftar'}</button>
         </form>
       </section>
     </main>

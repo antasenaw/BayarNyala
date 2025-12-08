@@ -1,7 +1,8 @@
 "use client"
 import { batalSewa } from "@/actions/batalSewa";
 import { bayar } from "@/actions/bayar";
-import { useRef, useState } from "react";
+import { SpinnerSVG } from "@/components/admin/Navbar";
+import { useActionState, useRef, useState } from "react";
 
 export function TagihanForm ({
   tagihan_id,
@@ -18,8 +19,10 @@ export function TagihanForm ({
 }) {
   const [formIsVisible, setFormIsVisible] = useState(false);
   const [displayBatalSewa, setDisplayBatalSewa] = useState(false);
+  const [loading, setLoading] = useState('');
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const [paymentMethod, setPaymentMethod] = useState('transfer');
+  const [data, action, pending] = useActionState(bayar, null);
   
   return (
     <>
@@ -32,7 +35,7 @@ export function TagihanForm ({
               memek
             </div>
             :
-            <form action={bayar}>
+            <form action={action}>
               <div className="bg-white text-gray-700 p-6 rounded-2xl min-w-xl max-w-xl shadow-2xl border border-gray-300">
                 <div className="flex justify-between items-center">
                   <div>
@@ -112,7 +115,10 @@ export function TagihanForm ({
                   <input className="absolute" type="hidden" name="jumlah_bayar" id="jumlah_bayar" hidden readOnly value={jumlah_bayar} />
                   <label className="absolute" htmlFor="verified_by"></label>
                   <input className="absolute" type="hidden" name="verified_by" id="verified_by" hidden readOnly value={verified_by} />
-                  <button className="hover:scale-102 active:scale-100 transition-all duration-300 ease-in-out bg-blue-600 text-white border-gray-400 font-semibold p-3 mt-4 border cursor-pointer shadow-lg  rounded-2xl">Bayar</button>
+                  <button 
+                    type="submit"
+                    className={`hover:scale-102 active:scale-100 transition-all duration-300 flex items justify-center gap-2 ease-in-out ${pending ? 'bg-white text-blue-600 border-blue-600' : 'bg-blue-600 text-white border-gray-400'} font-semibold p-3 mt-4 border cursor-pointer shadow-lg  rounded-2xl`}
+                  >{pending ? <>Membayar {SpinnerSVG}</> : <>Bayar</>}</button>
                 </fieldset>
               </div>
             </form>
@@ -129,8 +135,14 @@ export function TagihanForm ({
             }} className="bg-blue-600 text-white grow basis-0 cursor-pointer hover:scale-105  active:scale-100 transition-all duration-300 ease-in-out border border-gray-400 rounded-2xl py-2 shadow-lg font-semibold text-lg">
               Tidak
             </button>
-            <button onClick={()=>batalSewa(payer_id, kamar_id)} className="basis-0 grow cursor-pointer hover:scale-105  active:scale-100 transition-all duration-300 ease-in-out border border-blue-600 text-blue-600 rounded-2xl py-2 shadow-lg font-semibold text-lg">
-              Ya
+            <button onClick={() => {
+              batalSewa(payer_id, kamar_id);
+              setLoading('loading1');
+            }} className="basis-0 grow cursor-pointer flex items-center justify-center gap-2 hover:scale-105  active:scale-100 transition-all duration-300 ease-in-out border border-blue-600 text-blue-600 rounded-2xl py-2 shadow-lg font-semibold text-lg">
+              {loading === 'loading1' ?
+                <>Membatalkan {SpinnerSVG}</> :
+                <>Ya</>
+              }
             </button>
           </div>
       </section>

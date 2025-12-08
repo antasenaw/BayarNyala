@@ -1,9 +1,10 @@
 "use server"
 
-import { getKamarById } from "@/lib/fetchKamar";
+import { editKamar, getKamarById } from "@/lib/fetchKamar";
 import { postPenyewaDetails } from "@/lib/fetchPenyewaDetails";
 import { postSewa } from "@/lib/fetchSewa";
 import { postTagihan } from "@/lib/fetchTagihan";
+import { revalidatePath } from "next/cache";
 
 
 
@@ -38,6 +39,10 @@ export async function sewa(prevState: unknown, formData: FormData) {
   const status = await formData.get('status') as string;
   
   const { data } = await getKamarById(String(kamar_id));
+  await editKamar(String(data?._id), {
+    ...data,
+    status_ketersediaan: false,
+  })
   
   const detailPenyewa = {
     user_id: user_id,
@@ -68,6 +73,7 @@ export async function sewa(prevState: unknown, formData: FormData) {
   
   await postTagihan(detailTagihan);
 
+  revalidatePath('/sewa-kamar', 'page');
   // console.log(penyewa.data, sewa.data, tagihan.data);
 
   return {

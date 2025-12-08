@@ -1,5 +1,6 @@
 "use client"
-import React, { useRef } from "react"
+import React, { useRef, useState } from "react"
+import { SpinnerSVG } from "../../Navbar";
 
 const DeleteKamarForm = ({
   setDeleteForm,
@@ -12,6 +13,7 @@ const DeleteKamarForm = ({
 }) => {
 
   const overlayRef = useRef<HTMLDivElement | null>(null); 
+  const [loading, setLoading] = useState('');
 
   return (
     <div ref={overlayRef} onClick={e => e.target === overlayRef.current && setDeleteForm(!deleteForm)} className="absolute inset-0 backdrop-blur-xs flex justify-center items-center">
@@ -20,11 +22,18 @@ const DeleteKamarForm = ({
           <div className="flex items-center mt-6 gap-6">
             <button onClick={() => {
               setDeleteForm(!deleteForm)
-            }} className="bg-blue-400 text-white grow basis-0 cursor-pointer hover:scale-105  active:scale-100 transition-all duration-300 ease-in-out border border-gray-400 rounded-2xl py-2 shadow-lg font-semibold text-lg">
+            }} className="bg-blue-600 text-white grow basis-0 cursor-pointer hover:scale-105  active:scale-100 transition-all duration-300 ease-in-out border border-gray-400 rounded-2xl py-2 shadow-lg font-semibold text-lg">
               Tidak
             </button>
-            <button onClick={deleteKamar} className="basis-0 grow cursor-pointer hover:scale-105  active:scale-100 transition-all duration-300 ease-in-out border border-blue-400 rounded-2xl py-2 shadow-lg font-semibold text-lg">
-              Ya
+            <button onClick={() => {
+              setLoading('loading1')
+              deleteKamar();
+            }} className="basis-0 text-blue-600 flex items-center justify-center gap-2 grow cursor-pointer hover:scale-105  active:scale-100 transition-all duration-300 ease-in-out border border-blue-600 rounded-2xl py-2 shadow-lg font-semibold text-lg">
+              {
+                loading === 'loading1' ?
+                  <>Menghapus kamar {SpinnerSVG}</> :
+                  <>Ya</>
+              }
             </button>
           </div>
       </section>

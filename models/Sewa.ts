@@ -5,7 +5,7 @@ export interface ISewa extends Document {
   kamar_id: mongoose.Types.ObjectId;
   tanggal_mulai: Date;
   tanggal_selesai: Date;
-  status: 'aktif' | 'selesai' | 'menunggu pembayaran';
+  status: 'aktif' | 'selesai' | 'menunggu pembayaran' | 'menunggu verifikasi';
   created_at: Date;
   updated_at: Date;
 }
@@ -33,8 +33,8 @@ const SewaSchema = new Schema<ISewa>(
     status: {
       type: String,
       enum: {
-        values: ['aktif', 'selesai', 'menunggu pembayaran'],
-        message: 'Status harus aktif, selesai, atau menunggu pembayaran',
+        values: ['aktif', 'selesai', 'menunggu pembayaran', 'menunggu verifikasi'],
+        message: 'Status harus aktif, selesai, menunggu pembayaran, atau menunggu verifikasi',
       },
       default: 'menunggu pembayaran',
     },

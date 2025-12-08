@@ -21,7 +21,7 @@ export async function GET(){
 
         const kamarList = await Kamar.find(await filter())
         .populate("managed_by", "nama email role")  // ← PERBAIKI: "managed_by" bukan "Manage By"
-        .sort({ nomor_unit: 1 });
+        .sort({ created_at: -1 });
 
         return NextResponse.json({
             success: true,

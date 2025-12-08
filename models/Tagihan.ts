@@ -5,7 +5,7 @@ export interface ITagihan extends Document {
   penyewa_id: mongoose.Types.ObjectId;
   jumlah_tagihan: number;
   tenggat_bayar: Date;
-  status_pembayaran: 'Belum Lunas' | 'Lunas';
+  status_pembayaran: 'Belum Lunas' | 'Lunas' | 'Menunggu Verifikasi';
   created_at: Date;
   updated_at: Date;
 }
@@ -34,8 +34,8 @@ const TagihanSchema = new Schema<ITagihan>(
     status_pembayaran: {
       type: String,
       enum: {
-        values: ['Belum Lunas', 'Lunas'],
-        message: 'Status harus Belum Lunas atau Lunas',
+        values: ['Belum Lunas', 'Lunas', 'Menunggu Verifikasi'],
+        message: 'Status harus Belum Lunas, Lunas, atau Menunggu Verifikasi',
       },
       default: 'Belum Lunas',
     },

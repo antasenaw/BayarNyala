@@ -12,7 +12,7 @@ export async function GET(/*request: Request*/) {
 
     const user_id = await getUserIdFromSession();
     const user_role = await getUserRole();
-    console.log(user_id, user_role)
+  // console.log(user_id, user_role)
 
     const filter = async () => {
       if (user_role === 'Admin') {

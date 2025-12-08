@@ -7,7 +7,7 @@ import { isoDateConvert } from "@/utils/isoDateConvert"
 const page = async () => {
   const userName = await getUserName();
   const sewaList = await getSewa();
-  console.log(sewaList);
+  // console.log(sewaList);
 
   return (
     <div className="h-screen max-h-screen w-full relative bg-white flex flex-col p-4 pb-8">
@@ -41,6 +41,8 @@ const page = async () => {
                           <p className="py-2 px-4 bg-green-100 rounded-2xl text-green-500 font-semibold border border-green-300">Aktif</p> :
                           sewa.status === 'menunggu pembayaran' ?
                           <p className="py-2 px-4 bg-red-100 rounded-2xl text-red-500 font-semibold border border-red-300">Menunggu pembayaran</p>:
+                          sewa.status === 'menunggu verifikasi' ?
+                          <p className="py-2 px-4 bg-blue-100 rounded-2xl text-blue-500 font-semibold border border-blue-300">Menunggu verifikasi</p>:
                           <p className="py-2 px-4 bg-gray-100 rounded-2xl text-gray-500 font-semibold border border-gray-300">Selesai</p>
                         }
                       </div>

@@ -10,7 +10,7 @@ import { isoDateConvert } from "@/utils/isoDateConvert";
 const page = async () => {
   const userName = await getUserName();
   const tagihanList = await getTagihan();
-  console.log(tagihanList)
+  // console.log(tagihanList)
   // console.log(tagihanList);
 
   return (
@@ -28,7 +28,7 @@ const page = async () => {
               <input type="text" className="border border-gray-400 bg-white p-2 px-4 rounded-2xl shadow-lg" placeholder="Cari kamar" />
             </div>
             <ul className="flex-1 overflow-y-auto mt-4 border border-gray-400 rounded-2xl p-4">
-              <div className={`${tagihanList.length === 0 ? '' : 'grid grid-cols-4 gap-4'}`}>
+              <div className={`${tagihanList.length === 0 ? '' : 'grid grid-cols-3 gap-4'}`}>
                 {tagihanList.length === 0 ? <p className="text-center text-gray-500">Belum ada tagihan</p> : tagihanList.map(async tagihan => {
                   // console.log(tagihan)
                   const pemilikKamar = await getUserById(Object(tagihan.kamar_id).managed_by);
@@ -42,6 +42,8 @@ const page = async () => {
                         {
                           tagihan.status_pembayaran === 'Lunas' ?
                           <p className="py-2 px-4 bg-green-100 rounded-2xl text-green-500 font-semibold border border-green-300">{tagihan.status_pembayaran}</p> :
+                          tagihan.status_pembayaran === 'Menunggu Verifikasi' ?
+                          <p className="py-2 px-4 bg-blue-100 rounded-2xl text-blue-500 font-semibold border border-blue-300">{tagihan.status_pembayaran}</p> :
                           <p className="py-2 px-4 bg-red-100 rounded-2xl text-red-500 font-semibold border border-red-300">{tagihan.status_pembayaran}</p>
                         }
                       </div>

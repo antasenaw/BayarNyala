@@ -41,7 +41,7 @@ const EditKamarForm = ({
       const updateData: IKamarInput = {
           nomor_unit: String(rawData.nomor_unit),
           harga_sewa: parseInt(String(rawData.harga_sewa), 10),
-          status_ketersediaan: (rawData.status_ketersediaan) === 'true',
+          status_ketersediaan: true,
           managed_by: userId
       };
       

@@ -1,7 +1,12 @@
 "use server"
 import { postPembayaran } from "@/lib/fetchPembayaran";
+import { editSewa } from "@/lib/fetchSewa";
+import { editTagihan, getTagihanById } from "@/lib/fetchTagihan";
+import connectDB from "@/lib/mongodb";
+import Sewa, { ISewa } from "@/models/Sewa";
 import { Buffer } from "buffer";
 import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
+import { revalidatePath } from "next/cache";
 
 async function convertImage(formData: FormData) {
   const file = formData.get('bukti_transfer') as File;
@@ -24,7 +29,8 @@ async function convertImage(formData: FormData) {
   return uploadResult.url;
 }
 
-export async function bayar(formData: FormData) {
+export async function bayar(prev: unknown, formData: FormData) {
+  await connectDB();
   
   const tagihan_id = formData.get('tagihan_id') as string;
   const payer_id = formData.get('payer_id') as string;
@@ -36,6 +42,22 @@ export async function bayar(formData: FormData) {
   const verified_by = formData.get('verified_by') as string;
   // console.log(verified_by)
   
+  const tagihan = (await getTagihanById(tagihan_id)).data;
+  const newTagihan = await editTagihan(String(tagihan?._id), {
+    ...tagihan,
+    status_pembayaran: 'Menunggu Verifikasi',
+  });
+
+  console.log(newTagihan);
+
+  const [ sewa ]: ISewa[] = (await Sewa.find({penyewa_id: Object(tagihan?.penyewa_id)._id, kamar_id: Object(tagihan?.kamar_id)._id}));
+  const newSewa = await editSewa(String(sewa._id), {
+    ...sewa,
+    status: 'menunggu verifikasi'
+  })
+
+  console.log(newSewa)
+
   const detailPembayaranCash = {
     tagihan_id: tagihan_id,
     payer_id: payer_id,
@@ -54,6 +76,8 @@ export async function bayar(formData: FormData) {
   }
 
   await postPembayaran(await detailPembayaran());
+  
+  revalidatePath('/tagihan', 'page');
   
   // console.log(pembayaran.data);
 

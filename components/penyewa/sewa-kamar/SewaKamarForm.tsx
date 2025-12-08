@@ -1,6 +1,7 @@
 "use client";
 
 import { sewa } from "@/actions/sewa";
+import { SpinnerSVG } from "@/components/admin/Navbar";
 import { useActionState, useRef, useState, } from "react";
 
 const SewaKamarForm = ({ nomor_unit, pemilik, penyewa_id, kamar_id }: { nomor_unit: string, pemilik: string, penyewa_id: string, kamar_id: string }) => {
@@ -75,9 +76,12 @@ const SewaKamarForm = ({ nomor_unit, pemilik, penyewa_id, kamar_id }: { nomor_un
                 <input className="absolute" type="hidden" name="status" id="status" hidden readOnly value='menunggu pembayaran' />
                 <button
                   type="submit"
-                  className={`hover:scale-102 active:scale-100 transition-all duration-300 ease-in-out ${pending ? 'bg-white text-blue-600 border-blue-600' : 'bg-blue-600 text-white border-gray-400'} font-semibold p-3 mt-4 border cursor-pointer shadow-lg  rounded-2xl`}
+                  className={`flex items-center justify-center gap-2 hover:scale-102 active:scale-100 transition-all duration-300 ease-in-out ${pending ? 'bg-white text-blue-600 border-blue-600' : 'bg-blue-600 text-white border-gray-400'} font-semibold p-3 mt-4 border cursor-pointer shadow-lg  rounded-2xl`}
                 >
-                  Sewa kamar
+                  {pending ?
+                    <>Menyewa {SpinnerSVG}</> :
+                    <>Sewa kamar</>
+                  }
                 </button>
               </fieldset>
             </form>

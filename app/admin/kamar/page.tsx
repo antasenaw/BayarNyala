@@ -2,7 +2,7 @@ import AddKamarButton from "@/components/admin/kamar/buttons/AddKamarButton";
 import KamarList from "@/components/admin/kamar/KamarList";
 import LogoutButton from "@/components/admin/LogoutButton";
 import Navbar from "@/components/admin/Navbar"
-import { getKamar, postKamar, deleteKamar, getKamarById, editKamar } from "@/lib/fetchKamar"
+import { getKamar, deleteKamar, getKamarById, editKamar } from "@/lib/fetchKamar"
 import { getUserName } from "@/lib/getUser";
 import { IKamarInput } from "@/models/Kamar";
 import { revalidatePath } from "next/cache";
@@ -10,13 +10,6 @@ import { revalidatePath } from "next/cache";
 
 const Page = async () => {
   const kamarList = await getKamar();
-  
-  const postKamarHandler = async (newKamarData: IKamarInput) => {
-    "use server"
-    const response = await postKamar(newKamarData);
-    if (response) revalidatePath('/admin/kamar', 'page');
-    return response
-  }
   
   const deleteKamarHandler = async (kamarId: string) => {
     "use server"
@@ -54,7 +47,7 @@ const Page = async () => {
           <section className="flex-1 flex flex-col overflow-hidden min-h-0">
             <div className="flex shrink-0 border bg-blue-600 border-gray-400 rounded-2xl p-3 shadow-xl justify-between">
               <input type="text" className="border border-gray-400 bg-white p-2 px-4 rounded-2xl shadow-lg" placeholder="Cari kamar" />
-              <AddKamarButton postKamarHandler={postKamarHandler}/>
+              <AddKamarButton/>
             </div>
             <KamarList
               kamarList={kamarList}

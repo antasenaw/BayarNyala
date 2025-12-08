@@ -1,4 +1,5 @@
 "use server"
+import { editKamar, getKamarById } from "@/lib/fetchKamar";
 import connectDB from "@/lib/mongodb";
 import PenyewaDetails from "@/models/PenyewaDetails";
 import Sewa from "@/models/Sewa";
@@ -11,7 +12,11 @@ export async function batalSewa(penyewa_id: string, kamar_id: string) {
   const [sewa] = await Sewa.find({penyewa_id: penyewa_id, kamar_id: kamar_id});
   const [tagihan] = await Tagihan.find({penyewa_id: penyewa_id, kamar_id: kamar_id});
   const [penyewa] = await PenyewaDetails.find({user_id: penyewa_id})
-
+  const kamar = (await getKamarById(kamar_id)).data;
+  await editKamar(kamar_id, {
+    ...kamar,
+    status_ketersediaan: true,
+  })
   // console.log(sewa._id, tagihan._id, penyewa._id);
 
   await Sewa.findByIdAndDelete(sewa._id);
