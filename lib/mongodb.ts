@@ -29,13 +29,24 @@ async function connectDB() {
     if (!cached.promise) {
         const opts = {
             bufferCommands: false,
+            serverSelectionTimeoutMS: 10000,
+            socketTimeoutMS: 45000,
+            family: 4, // Use IPv4, skip trying IPv6
+            retryWrites: true,
+            w: 'majority',
         };
-        cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-            return mongoose;
-        });
+        
+        cached.promise = mongoose.connect(MONGODB_URI, opts)
+            .then((mongoose) => {
+                console.log('MongoDB connected successfully');
+                return mongoose;
+            })
+            .catch((error) => {
+                cached.promise = null;
+                console.error('MongoDB connection error:', error.message);
+                throw error;
+            });
     }
-    cached.conn = await cached.promise;
-    return cached.conn;
 
     try {
         cached.conn = await cached.promise;

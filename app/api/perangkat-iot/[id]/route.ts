@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import PerangkatIot from '@/models/PerangkatIot';
 import '@/models/Kamar';
+import { publishRelayControl } from '@/lib/mqttClient';
 
 // GET - Get perangkat IoT by ID
 export async function GET(
@@ -65,6 +66,19 @@ export async function PUT(
         { success: false, error: 'Perangkat IoT tidak ditemukan' },
         { status: 404 }
       );
+    }
+
+    // Kirim perintah ke perangkat IoT jika status listrik diubah
+    if (status_listrik !== undefined && perangkat.kamar_id) {
+      try {
+        const kamarId = typeof perangkat.kamar_id === 'object' && '_id' in perangkat.kamar_id 
+          ? perangkat.kamar_id._id.toString() 
+          : perangkat.kamar_id.toString();
+        await publishRelayControl(kamarId, status_listrik);
+        console.log(`Relay control sent for kamar ${kamarId}: ${status_listrik ? 'ON' : 'OFF'}`);
+      } catch (mqttError) {
+        console.error('Error sending MQTT command:', mqttError);
+      }
     }
 
     return NextResponse.json({

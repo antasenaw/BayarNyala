@@ -3,6 +3,7 @@ import connectDB from '@/lib/mongodb';
 import Sewa from '@/models/Sewa';
 import '@/models/User';
 import '@/models/Kamar';
+import { publishSewaExpiry, publishRelayControl } from '@/lib/mqttClient';
 
 // GET - Get sewa by ID
 export async function GET(
@@ -67,6 +68,27 @@ export async function PUT(
         { success: false, error: 'Sewa tidak ditemukan' },
         { status: 404 }
       );
+    }
+
+    // Kirim update ke ESP32 jika status berubah menjadi aktif atau selesai
+    if (status !== undefined) {
+      try {
+        const kamarId = typeof sewa.kamar_id === 'object' && '_id' in sewa.kamar_id
+          ? sewa.kamar_id._id.toString()
+          : sewa.kamar_id.toString();
+
+        if (status === 'aktif') {
+          await publishSewaExpiry(kamarId, sewa.tanggal_selesai, 'aktif');
+          await publishRelayControl(kamarId, true); // Hidupkan listrik
+          console.log(`Sewa activated - expiry date sent to ESP32 for kamar ${kamarId}`);
+        } else if (status === 'selesai') {
+          await publishSewaExpiry(kamarId, sewa.tanggal_selesai, 'selesai');
+          await publishRelayControl(kamarId, false); // Matikan listrik
+          console.log(`Sewa ended - relay turned off for kamar ${kamarId}`);
+        }
+      } catch (mqttError) {
+        console.error('MQTT error:', mqttError);
+      }
     }
 
     return NextResponse.json({

@@ -4,6 +4,7 @@ import Sewa from '@/models/Sewa';
 import '@/models/User';
 import '@/models/Kamar';
 import { getUserIdFromSession } from '@/lib/getUser';
+import { publishSewaExpiry, publishRelayControl } from '@/lib/mqttClient';
 
 // GET - Get all sewa
 export async function GET(/*request: Request*/) {
@@ -82,6 +83,18 @@ export async function POST(request: Request) {
 
     await sewa.populate('penyewa_id', 'nama email');
     await sewa.populate('kamar_id', 'nomor_unit harga_sewa');
+
+    // Kirim tanggal selesai ke ESP32 jika status aktif
+    if (sewa.status === 'aktif') {
+      try {
+        await publishSewaExpiry(kamar_id, selesai, 'aktif');
+        await publishRelayControl(kamar_id, true); // Hidupkan listrik
+        console.log(`Sewa expiry date sent to ESP32 for kamar ${kamar_id}`);
+      } catch (mqttError) {
+        console.error('MQTT error:', mqttError);
+        // Continue even if MQTT fails
+      }
+    }
 
     return NextResponse.json({
       success: true,

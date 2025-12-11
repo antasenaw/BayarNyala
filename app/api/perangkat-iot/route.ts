@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import PerangkatIot from '@/models/PerangkatIot';
 import '@/models/Kamar';
+import { publishRelayControl } from '@/lib/mqttClient';
 
 // GET - Get all perangkat IoT
 export async function GET(request: Request) {
