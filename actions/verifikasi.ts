@@ -18,7 +18,7 @@ async function verifikasiSewa(tagihanPenyewaId: string) {
     status: 'aktif'
   };
   await editSewa(sewa._id, updatedSewaData);
-  // console.log(updatedSewa, 'memek')
+  // console.log(updatedSewa, 'sewa updated')
 }
 
 async function verifikasiKamar(kamarId: string) {

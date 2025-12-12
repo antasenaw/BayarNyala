@@ -32,7 +32,7 @@ export function TagihanForm ({
         <div ref={overlayRef} className="backdrop-blur-xs absolute inset-0 flex justify-center items-center" onClick={e => {if (e.target === overlayRef.current) {setFormIsVisible(false); setPaymentMethod('transfer')}}}>
           {false ?
             <div>
-              memek
+              Loading...
             </div>
             :
             <form action={action}>
