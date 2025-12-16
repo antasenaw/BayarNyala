@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { ConnectOptions } from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI!;
 
@@ -27,7 +27,7 @@ async function connectDB() {
     }
 
     if (!cached.promise) {
-        const opts = {
+        const opts: ConnectOptions = {
             bufferCommands: false,
             serverSelectionTimeoutMS: 10000,
             socketTimeoutMS: 45000,
