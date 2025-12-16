@@ -49,12 +49,12 @@ const Page = async () => {
                       <p className="font-bold text-blue-600 text-4xl">{formatToRupiah(tagihan.jumlah_tagihan)}</p>
                       <p className="mt-4 text-gray-400">Tenggat pembayaran :</p>
                       <p className="font-semibold text-red-500">{isoDateConvert(tagihan.tenggat_bayar)}</p>
-                      {tagihan.status_pembayaran !== 'Belum Lunas' &&
+                      {/* {tagihan.status_pembayaran !== 'Belum Lunas' &&
                         <>
                           <p className="mt-4 text-gray-400">Dibayar pada :</p>
-                          <p className="font-semibold text-blue-500">{isoDateConvert(tagihan.tenggat_bayar)}</p>
+                          <p className="font-semibold text-blue-500">{isoDateConvert(tagihan.updated_at)}</p>
                         </>
-                      }
+                      } */}
                     </li>
                   )
                 })}

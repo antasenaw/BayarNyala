@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "BayarNyala",
-  description: "IoT based residence renting management web application",
+  description: "IoT based property renting management web application",
 };
 
 export default function RootLayout({children,}: Readonly<{children: React.ReactNode;}>) {

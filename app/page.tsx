@@ -30,7 +30,7 @@ export default function Home() {
         </header>
         <main className="flex flex-col h-full w-full justify-center gap-4 pl-24">
           <h1 className="font-bold text-7xl text-blue-800 flex items-center">BayarNyala</h1>
-          <p className="text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />Integer posuere sollicitudin tellus, eget mollis neque auctor nec. <br />Vestibulum vehicula, dolor quis consectetur ornare, <br />diam lorem molestie purus, gravida bibendum ipsum quam at massa.</p>
+          <p className="text-xl">Essential property management app that guarantees timely rent collection.<br />Integrated IoT technology to link payment status to utility access within each unit. <br />Automated enforcement eliminates payment chasing and ensures constant, reliable cash flow.<br />Powerful, unified platform for managing entire portfolio and securing revenue effortlessly.</p>
           <div className="flex text-xl gap-4 font-semibold">
             <Link
               onClick={() => {
